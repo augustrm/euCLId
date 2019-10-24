@@ -1,2 +1,2 @@
 # euCLId
-A Command Line Interface for Achieving Similar Functionality to Geometer's Sketch Pad or Kig utilizing python
+A Command Line Interface for Achieving Similar Functionality to Geometer's Sketch Pad or Kig utilizing python and its default packages
