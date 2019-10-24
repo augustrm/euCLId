@@ -1,6 +1,7 @@
 import turtle
 window = turtle.Screen
 seac = turtle.Turtle()
+#stylistic note: seac stands for Straight Edge And Compass
 seac.ht()
 turtle.tracer()
 seac.home()
