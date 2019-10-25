@@ -39,8 +39,17 @@ class euCircle:
             self.octant1.append(coordinate)
         self.circ_coords = []
         for j in self.octant1:
-            self.circ_coords.append((j[0], j[1]), (j[1], j[0]), (j[0], -j[1]), (j[1], -j[0]), )
-        self.quadrant1 = self.octant1 + self.octant2
+        	self.circ_coords.extend(
+				(j[0], j[1]), 
+				(j[1], j[0]), 
+				(j[1], -j[0]), 
+				(j[0], -j[1]), 
+				(-j[0], -j[1]),
+				(-j[1], -j[0]), 
+				(-j[1], j[0]),
+				(-j[0], j[1])
+			)
+
         
        
         
