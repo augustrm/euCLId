@@ -9,28 +9,25 @@ seac.speed(0)
 seac.home()
 seac.pu()
 seac.color("red")
+
+class euPoint:
+	def __init__(self, x, y, name):
+		self.coords = (x,y)
+		self.name = name
+	def __iter__(self):
+		return((self.x, self.y))
 #define a point, its coordinates are arbitary:
-A = (0,23)
-seac.setpos(A)
+A = euPoint(0,23, "A")
+seac.setpos(A.coords)
 seac.dot()
 
 #define a point, its coordinates are arbitary:
-B = (200, 200)
-seac.setpos(B)
+B = euPoint(200, 200, "B")
+seac.setpos(B.coords)
 seac.dot()
 
 seac.color("blue")
 
-class euPoint:
-	def __init__(self, x, y):
-		self.coordinates = (x,y)
-
-
-def point(x,y,name):
-	pass
-#point(100, 300, "testpoint")
-
-print(globals())
 
 class euCircle:
 	def __init__(self, center_point, radial_point, name, n=1000):
@@ -46,11 +43,11 @@ class euCircle:
 def circthru(ptA, ptB):
 	seac.setpos(ptB[0], ptB[1])
 	seac.pd()
-	seac.setheading(seac.towards(ptA)-90)
+	seac.setheading(seac.towards((ptA[0],ptA[1]))-90)
 	radius=seac.distance(ptA)
 	seac.circle(radius)
 	seac.pu()
 
 circthru(A,B)
-circthru(B,A)
+#circthru(B.coords,A.coords)
 turtle.exitonclick()
