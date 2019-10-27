@@ -23,7 +23,7 @@ class euPoint:
 
 
 #define a point, its coordinates are arbitary:
-A = euPoint(0,23, "A")
+A = euPoint(-350,23, "A")
 seac.setpos(A.xy)
 seac.dot()
 
@@ -41,23 +41,32 @@ class euCircle:
 		self.c = center_point
 		self.r_p = radial_point
 		self.radius = sqrt((self.r_p[0]-self.c[0])**2 + (self.r_p[1]-self.c[1])**2)
+		#coordinate container list:
 		self.circ_xy = []
+		#populate coordinate container list:
 		for i in range(0, n+1):
 			self.circ_xy.append((self.c[0] + cos(2*pi/n*i)*self.radius, self.c[1] + sin(2*pi/n*i)*self.radius))
 
-circ_data = {}
+position_data = {}
 
 def circthru(ptA, ptB):
 	seac.setpos(ptB[0], ptB[1])
 	seac.pd()
 	seac.setheading(seac.towards((ptA[0],ptA[1]))-90)
-	circ_data["circ"+str(ptA)+str(ptB)] = euCircle((ptA[1], ptA[0]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
+	#make the newly generated euCircle globally accessable as a variable:
+	globals()["circ"+str(ptA)+str(ptB)] = euCircle((ptA[1], ptA[0]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
 	radius = seac.distance((ptA[0],ptA[1]))
 	seac.circle(radius)
 	seac.pu()
 
 
+def intercept(obj1, obj2):
+	pass
+
+
+#testing:
 circthru(A,B)
-print(circ_data["circAB"].circ_xy)
-#circthru(B.xy,A.xy)
+circthru(B,A)
+#
+print(circAB.circ_xy)
 turtle.exitonclick()
