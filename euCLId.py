@@ -1,5 +1,5 @@
 import turtle
-from math import *
+from math import cos, sin, sqrt, pi
 window = turtle.Screen
 
 #stylistic note: seac stands for Straight Edge And Compass
@@ -16,6 +16,8 @@ class euPoint:
 		self.name = name
 	def __iter__(self):
 		return((self.x, self.y))
+
+
 #define a point, its coordinates are arbitary:
 A = euPoint(0,23, "A")
 seac.setpos(A.coords)
