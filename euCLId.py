@@ -23,14 +23,20 @@ class euPoint:
 	def __str__(self):
 		return self.name
 
-
-
+		
+class euLine:
+	def __init__(self, ptA, ptB, name):
+		self.name = name
+		self.ptA = (ptA[0], ptA[1])
+		self.ptB = (ptB[0], ptB[1])
+		self.slope = (self.ptB[1] - self.ptA[1]) / (self.ptB[0] - self.ptA[0])
+		
 class euCircle:
 	def __init__(self, center_point, radial_point, name, n=1000):
 		self.name = name
 		self.shape = 'circle'
-		self.c = center_point
-		self.r_p = radial_point
+		self.c = (center_point[0],center_point[1]) 
+		self.r_p = (radial_point[0], radial_point[1])
 		self.radius = sqrt((self.r_p[0]-self.c[0])**2 + (self.r_p[1]-self.c[1])**2)
 		#coordinate container list:
 		self.xy = []
@@ -38,18 +44,35 @@ class euCircle:
 		for i in range(0, n+1):
 			self.xy.append((self.c[0] + cos(2*pi/n*i)*self.radius, self.c[1] + sin(2*pi/n*i)*self.radius))
 
-position_data = {}
 
-def circthru(ptA, ptB):
-	seac.setpos(ptB[0], ptB[1])
-	seac.pd()
-	seac.setheading(seac.towards((ptA[0],ptA[1]))-90)
-	#make the newly generated euCircle globally accessible as a variable:
-	globals()["circ"+str(ptA)+str(ptB)] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
-	radius = seac.distance((ptA[0],ptA[1]))
-	seac.circle(radius)
-	seac.pu()
 
+			
+def draw_line(ptA, ptB, show=True):
+	if show == True:
+		globals()["line"+str(ptA)+str(ptB)] = euLine(ptA, ptB, "line"+str(ptA)+str(ptB))
+		seac.pu()
+		seac.setpos(ptA[0], ptA[1])
+		seac.pd()
+		seac.setpos(ptB[0], ptB[1])
+		seac.pu()
+	else:
+		globals()["line"+str(ptA)+str(ptB)] = euLine(ptA, ptB, "line"+str(ptA)+str(ptB))
+
+		
+def draw_circle(ptA, ptB, show=True):
+	if show == True:
+		#make the newly generated euCircle globally accessible as a variable:
+		globals()["circ"+str(ptA)+str(ptB)] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
+		#draw the circle:
+		seac.pu()
+		seac.setpos(ptB[0], ptB[1])
+		seac.setheading(seac.towards((ptA[0],ptA[1]))-90)
+		radius = seac.distance((ptA[0],ptA[1]))
+		seac.pd()
+		seac.circle(radius)
+		seac.pu()
+	else:
+		globals()["circ"+str(ptA)+str(ptB)] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
 
 def intersect(obj1, obj2):
 	if obj1.shape == 'circle' and obj2.shape == 'circle':
@@ -94,21 +117,25 @@ def intersect(obj1, obj2):
 			
 			#testing:
 #define a point, its coordinates are arbitary:
-A = euPoint(200,200, "A")
+A = euPoint(100,50, "A")
 seac.setpos(A.xy)
 seac.dot()
 
 #define a point, its coordinates are arbitary:
-B = euPoint(-100, -500, "B")
+B = euPoint(-100, -39, "B")
 seac.setpos(B.xy)
 seac.dot()
 
 seac.color("blue")
 
 
-circthru(A,B)
-circthru(B,A)
-print(intersect(circAB, circBA))
+draw_circle(A,B)
+draw_circle(B,A)
+draw_line(A,B)
+intersect(circAB, circBA)
+draw_line(circAB_intersect_circBA_1 ,A)
+draw_line(circAB_intersect_circBA_1 ,B)
+
 #
 #print(circAB.xy)
 turtle.exitonclick()
