@@ -74,7 +74,7 @@ def draw_circle(ptA, ptB, show=True):
 	else:
 		globals()["circ"+str(ptA)+str(ptB)] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
 
-def intersect(obj1, obj2):
+def intersect(obj1, obj2, show=True, show1=True, show2=True):
 	if obj1.shape == 'circle' and obj2.shape == 'circle':
 		distance = sqrt((obj2.c[0] - obj1.c[0])**2 + (obj2.c[1] - obj1.c[1])**2)
 		#case of non intersecting circles:
@@ -98,41 +98,45 @@ def intersect(obj1, obj2):
 			#add intersect points to globals; in form of "circAB_intersect_circBA_1"
 			globals()[obj1.name+"_intersect_"+obj2.name+"_1"] = euPoint(x3, y3, obj1.name+"_intersect_"+obj2.name+"_1")
 			globals()[obj1.name+"_intersect_"+obj2.name+"_2"] = euPoint(x4, y4, obj1.name+"_intersect_"+obj2.name+"_1")
-			#draw intersect 1:
-			seac.pu()
-			seac.setpos(x3,y3)
-			seac.pd()
-			seac.dot()
-			seac.pu()
-			#draw intersect 2:
-			seac.pu()
-			seac.setpos(x4,y4)
-			seac.pd()
-			seac.dot()
-			seac.pu()
+			if show == True:
+				if show1 == True:
+					#draw intersect 1:
+					seac.pu()
+					seac.setpos(x3,y3)
+					seac.pd()
+					seac.dot()
+					seac.pu()
+					
+				if show2 == True:
+					#draw intersect 2:
+					seac.pu()
+					seac.setpos(x4,y4)
+					seac.pd()
+					seac.dot()
+					seac.pu()
 			#send seac to origin (0,0)
 			seac.home
 			return [(x3,y3), (x4,y4)]
 
 			
 			#testing:
-#define a point, its coordinates are arbitary:
+#define a point, its coordinates are arbitrary:
 A = euPoint(100,50, "A")
 seac.setpos(A.xy)
 seac.dot()
 
-#define a point, its coordinates are arbitary:
-B = euPoint(-100, -39, "B")
+#define a point, its coordinates are arbitrary:
+B = euPoint(20, -39, "B")
 seac.setpos(B.xy)
 seac.dot()
 
 seac.color("blue")
 
 
-draw_circle(A,B)
-draw_circle(B,A)
+draw_circle(A,B, show=False)
+draw_circle(B,A, show=False)
 draw_line(A,B)
-intersect(circAB, circBA)
+intersect(circAB, circBA, show2=False)
 draw_line(circAB_intersect_circBA_1 ,A)
 draw_line(circAB_intersect_circBA_1 ,B)
 
