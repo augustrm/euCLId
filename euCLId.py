@@ -1,8 +1,8 @@
 import turtle
 from math import cos, sin, sqrt, pi
 
-window = turtle.Screen
-
+turtle.Screen()
+turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 seac.ht()
@@ -27,10 +27,14 @@ class euPoint:
 class euLine:
 	def __init__(self, ptA, ptB, name):
 		self.name = name
+		self.shape = 'line'
 		self.ptA = (ptA[0], ptA[1])
 		self.ptB = (ptB[0], ptB[1])
 		self.slope = (self.ptB[1] - self.ptA[1]) / (self.ptB[0] - self.ptA[0])
+	def __str__(self):
+		return self.name
 		
+
 class euCircle:
 	def __init__(self, center_point, radial_point, name, n=1000):
 		self.name = name
@@ -43,10 +47,10 @@ class euCircle:
 		#populate coordinate container list:
 		for i in range(0, n+1):
 			self.xy.append((self.c[0] + cos(2*pi/n*i)*self.radius, self.c[1] + sin(2*pi/n*i)*self.radius))
-
-
-
+	def __str__(self):
+		return self.name
 			
+
 def draw_line(ptA, ptB, show=True):
 	if show == True:
 		globals()["line"+str(ptA)+str(ptB)] = euLine(ptA, ptB, "line"+str(ptA)+str(ptB))
@@ -74,8 +78,26 @@ def draw_circle(ptA, ptB, show=True):
 	else:
 		globals()["circ"+str(ptA)+str(ptB)] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
 
+
 def intersect(obj1, obj2, show=True, show1=True, show2=True):
-	if obj1.shape == 'circle' and obj2.shape == 'circle':
+	# simple 2x2 determinant:
+	def _2x2det(a,b,c,d):
+		return (a*d)-(c*b)
+	
+	# modified signum function for circle-line intersect clause:
+	def _signum(x):
+		if x < 0:
+			return (-1)
+		else:
+			return 1
+	
+	# intersect of a singular point and another object is nonsensical, as a point is that which contains no part
+	if obj1.shape == 'point' or obj2.shape == 'point':
+		pass
+	
+	# Intersect of a circle and a circle
+	# http://mathworld.wolfram.com/Circle-CircleIntersection.html
+	elif obj1.shape == 'circle' and obj2.shape == 'circle':
 		distance = sqrt((obj2.c[0] - obj1.c[0])**2 + (obj2.c[1] - obj1.c[1])**2)
 		#case of non intersecting circles:
 		if distance > obj1.radius + obj2.radius:
@@ -117,9 +139,22 @@ def intersect(obj1, obj2, show=True, show1=True, show2=True):
 			#send seac to origin (0,0)
 			seac.home
 			return [(x3,y3), (x4,y4)]
+	
+	# Intersect of a line and a circle or a circle and a line:
+	#http://mathworld.wolfram.com/Circle-LineIntersection.html
+	elif obj1.shape == 'line' and obj2.shape == 'circle':
+		r = obj2.radius
+		# adjust coordinates so circle is centered at origin for calculation:
+		x_delta , y_delta = -obj2.c[0], -obj2.c[1]
+		x1 ,y1 = obj1.ptA[0] + x_delta , obj1.ptA[1] + y_delta
+		x2 ,y2 = obj1.ptB[0] + x_delta , obj1.ptB[1] + y_delta
+		d_x = x2 - x1
+		d_y = y2 - y1
+		d_r = sqrt(d_x**2 + d_y**2)
+		D = _2x2det(x1, x2, y1, y2)
+		pass
 
-			
-			#testing:
+#testing:
 #define a point, its coordinates are arbitrary:
 A = euPoint(100,50, "A")
 seac.setpos(A.xy)
@@ -128,6 +163,10 @@ seac.dot()
 #define a point, its coordinates are arbitrary:
 B = euPoint(20, -39, "B")
 seac.setpos(B.xy)
+seac.dot()
+
+C = euPoint(50, 1000, "C")
+seac.setpos(C.xy)
 seac.dot()
 
 seac.color("blue")
@@ -139,7 +178,10 @@ draw_line(A,B)
 intersect(circAB, circBA, show2=False)
 draw_line(circAB_intersect_circBA_1 ,A)
 draw_line(circAB_intersect_circBA_1 ,B)
-
+seac.color("green")
+draw_circle(C,B)
+draw_circle(C,A)
+draw_circle(C,circAB_intersect_circBA_1)
 #
 #print(circAB.xy)
 turtle.exitonclick()
