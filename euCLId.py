@@ -244,6 +244,13 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 				seac.setpos(x_int2,y_int2)
 				seac.dot()
 				seac.home()
+	elif obj1.shape == 'line' and obj2.shape == 'line':
+		# http://mathworld.wolfram.com/Line-LineIntersection.html
+		x1, y1 = obj1.ptA[0], obj1.ptA[1]
+		x2, y2 = obj1.ptB[0], obj1.ptB[1]
+		x3, y3 = obj2.ptA[0], obj2.ptA[1]
+		x4, y4 = obj2.ptB[0], obj2.ptB[1]
+		pass
 
 #testing:
 #define a point, its coordinates are arbitrary:
