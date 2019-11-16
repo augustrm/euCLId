@@ -36,17 +36,12 @@ class euLine:
 		
 
 class euCircle:
-	def __init__(self, center_point, radial_point, name, n=1000):
+	def __init__(self, center_point, radial_point, name):
 		self.name = name
 		self.shape = 'circle'
 		self.c = (center_point[0],center_point[1]) 
 		self.r_p = (radial_point[0], radial_point[1])
 		self.radius = sqrt((self.r_p[0]-self.c[0])**2 + (self.r_p[1]-self.c[1])**2)
-		#coordinate container list:
-		##self.xy = []
-		#populate coordinate container list:
-		##for i in range(0, n+1):
-		##	self.xy.append((self.c[0] + cos(2*pi/n*i)*self.radius, self.c[1] + sin(2*pi/n*i)*self.radius))
 	def __str__(self):
 		return self.name
 			
