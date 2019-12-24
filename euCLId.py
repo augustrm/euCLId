@@ -250,6 +250,14 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 		x2, y2 = obj1.ptB[0], obj1.ptB[1]
 		x3, y3 = obj2.ptA[0], obj2.ptA[1]
 		x4, y4 = obj2.ptB[0], obj2.ptB[1]
+		x_line_int = (_2x2det(_2x2det(x1, y1, x2, y2), (x1-x2), _2x2det(x3, y3, x4, y4), (x3-x4)))/(_2x2det((x1-x2), (y1-y2), (x3-x4), (y3-y4)))
+		y_line_int = (_2x2det(_2x2det(x1, y1, x2, y2), (y1-y2), _2x2det(x3, y3, x4, y4), (y3-y4)))/(_2x2det((x1-x2), (y1-y2), (x3-x4), (y3-y4)))
+		
+		if name1 == None:
+			globals()[obj1.name+"_intersect_"+obj2.name+"_1"] = euPoint(x3, y3, obj1.name+"_intersect_"+obj2.name+"_1")
+		else:
+			name1=str(name1) #sanitize name1 so it is always a string
+			globals()[name1] = euPoint(x3, y3, name1)
 		pass
 
 #testing:
