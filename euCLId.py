@@ -33,7 +33,8 @@ class euLine:
 		self.slope = (self.ptB[1] - self.ptA[1]) / (self.ptB[0] - self.ptA[0])
 	def __str__(self):
 		return self.name
-		
+	def produce(self):
+		pass
 
 class euCircle:
 	def __init__(self, center_point, radial_point, name):
@@ -94,7 +95,7 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 	def _2x2det(a,b,c,d):
 		return (a*d)-(c*b)
 	
-	# modified signum function for circle-line intersect clause:
+	# modified signum function for circle-line / line-circle intersect clause:
 	def _signum(x):
 		if x < 0:
 			return (-1)
@@ -254,11 +255,11 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 		y_line_int = (_2x2det(_2x2det(x1, y1, x2, y2), (y1-y2), _2x2det(x3, y3, x4, y4), (y3-y4)))/(_2x2det((x1-x2), (y1-y2), (x3-x4), (y3-y4)))
 		
 		if name1 == None:
-			globals()[obj1.name+"_intersect_"+obj2.name+"_1"] = euPoint(x3, y3, obj1.name+"_intersect_"+obj2.name+"_1")
+			globals()[obj1.name+"_intersect_"+obj2.name+"_1"] = euPoint(x_line_int, y_line_int, obj1.name+"_intersect_"+obj2.name+"_1")
 		else:
 			name1=str(name1) #sanitize name1 so it is always a string
-			globals()[name1] = euPoint(x3, y3, name1)
-		pass
+			globals()[name1] = euPoint(x_line_int, y_line_int, name1)
+		
 
 #testing:
 #define a point, its coordinates are arbitrary:
