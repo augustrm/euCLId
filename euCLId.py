@@ -13,10 +13,16 @@ seac.pu()
 seac.color("red")
 
 class euPoint:
-	def __init__(self, x, y, name):
+	def __init__(self, x, y, name, show=True):
 		self.xy = (x,y)
 		self.name = name
 		self.shape = 'point'
+		self.show = show
+		# rolling "draw" functionality into class definitions
+		if self.show == True:
+			seac.pu()
+			seac.setpos(self.xy[0], self.xy[1])
+			seac.dot()
 	def __iter__(self):
 		yield(self.xy)
 	def __getitem__(self, i):
@@ -26,14 +32,23 @@ class euPoint:
 
 		
 class euLine:
-	def __init__(self, ptA, ptB, name):
+	def __init__(self, ptA, ptB, name, show=True):
 		self.name = name
 		self.shape = 'line'
 		self.ptA = (ptA[0], ptA[1])
 		self.ptB = (ptB[0], ptB[1])
+		self.show = show
 		# Conditional necessary to handle edge case of vertical and close to vertical lines:
 		if self.ptB[0]-self.ptA[0] != 0:
 			self.slope = (self.ptB[1] - self.ptA[1]) / (self.ptB[0] - self.ptA[0])
+			
+		# rolling depracated "draw_line()" method into euLine class:
+		if self.show == True:
+			seac.pu()
+			seac.setpos(self.ptA[0], self.ptA[1])
+			seac.pd()
+			seac.setpos(self.ptB[0], self.ptB[1])
+			seac.pu()
 	def __str__(self):
 		return self.name
 	#
@@ -44,18 +59,28 @@ class euLine:
 		pass
 
 class euCircle:
-	def __init__(self, center_point, radial_point, name):
+	def __init__(self, center_point, radial_point, name, show=True):
 		self.name = name
 		self.shape = 'circle'
 		self.c = (center_point[0],center_point[1]) 
 		self.r_p = (radial_point[0], radial_point[1])
 		self.radius = sqrt((self.r_p[0]-self.c[0])**2 + (self.r_p[1]-self.c[1])**2)
+		self.show = show
+		if self.show == True:
+			seac.pu()
+			seac.setpos(self.r_p[0], self.r_p[1])
+			seac.setheading(seac.towards((self.c[0],self.c[1]))-90)
+			#radius = seac.distance((self.ptA[0],ptA[1]))
+			seac.pd()
+			seac.circle(self.radius)
+			seac.pu()
 	def __str__(self):
 		return self.name
 			
 ########################################################################################################
 #                                     end of basic object definitions                                  #
 ########################################################################################################
+"""
 def draw_line(ptA, ptB, name=None, show=True):
 	if show == True:
 		if name == None:
@@ -73,6 +98,7 @@ def draw_line(ptA, ptB, name=None, show=True):
 
 		
 def draw_circle(ptA, ptB, name=None, show=True):
+	# ptA is center, ptB is radial point
 	if show == True:
 		#make the newly generated euCircle globally accessible as a variable:
 		if name == None:
@@ -96,7 +122,7 @@ def draw_circle(ptA, ptB, name=None, show=True):
 			name=str(name)
 			globals()[name] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]), name)
 			
-			
+"""		
 def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=True):
 	# simple 2x2 determinant:
 	def _2x2det(a,b,c,d):
@@ -283,26 +309,28 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 #testing:
 #define a point, its coordinates are arbitrary:
 A = euPoint(30,50, "A")
-seac.setpos(A.xy)
-seac.dot()
+#seac.setpos(A.xy)
+#seac.dot()
 
 #define a point, its coordinates are arbitrary:
 B = euPoint(20, -39, "B")
-seac.setpos(B.xy)
-seac.dot()
+#seac.setpos(B.xy)
+#seac.dot()
 
 C = euPoint(80, 130, "C")
-seac.setpos(C.xy)
-seac.dot()
+#seac.setpos(C.xy)
+#seac.dot()
 
 D = euPoint(80, -50, "D")
-seac.setpos(D.xy)
-seac.dot()
+#seac.setpos(D.xy)
+#seac.dot()
+
+line_AB = euLine(A,B, 'test')
 
 seac.color("blue")
-draw_line(A,B)
-draw_line(C,D)
-intersect(lineAB, lineCD, name1='gamma')
+#draw_line(A,B)
+#draw_line(C,D)
+#intersect(lineAB, lineCD, name1='gamma')
 '''
 draw_circle(A,B, show=False)
 draw_circle(B,A, show=False)
