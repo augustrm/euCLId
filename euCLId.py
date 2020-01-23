@@ -14,7 +14,7 @@ seac.color("red")
 
 class euPoint:
 	def __init__(self, x, y, name):
-		self.xy = (float(x),float(y))
+		self.xy = (x,y)
 		self.name = name
 		self.shape = 'point'
 	def __iter__(self):
@@ -29,8 +29,8 @@ class euLine:
 	def __init__(self, ptA, ptB, name):
 		self.name = name
 		self.shape = 'line'
-		self.ptA = (float(ptA[0]), float(ptA[1]))
-		self.ptB = (float(ptB[0]), float(ptB[1]))
+		self.ptA = (ptA[0], ptA[1])
+		self.ptB = (ptB[0], ptB[1])
 		# Conditional necessary to handle edge case of vertical and close to vertical lines:
 		if self.ptB[0]-self.ptA[0] != 0:
 			self.slope = (self.ptB[1] - self.ptA[1]) / (self.ptB[0] - self.ptA[0])
