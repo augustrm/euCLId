@@ -3,17 +3,17 @@ from math import cos, sin, sqrt, pi
 
 screen = turtle.Screen()
 screen.screensize(2000,2000)
-#turtle.delay(0)
+turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
-seac.speed(5)
+seac.speed(1)
 seac.home()
 seac.pu()
 seac.color("red")
 
 class euPoint:
-	def __init__(self, x, y, name, show=True):
+	def __init__(self, x, y, name="default euPoint name", show=True):
 		self.xy = (x,y)
 		self.name = name
 		self.shape = 'point'
@@ -32,7 +32,7 @@ class euPoint:
 
 		
 class euLine:
-	def __init__(self, ptA, ptB, name, show=True):
+	def __init__(self, ptA, ptB, name="default euLine name", show=True):
 		self.name = name
 		self.shape = 'line'
 		self.ptA = (ptA[0], ptA[1])
@@ -59,7 +59,7 @@ class euLine:
 		pass
 
 class euCircle:
-	def __init__(self, center_point, radial_point, name, show=True):
+	def __init__(self, center_point, radial_point, name="default euCircle name", show=True):
 		self.name = name
 		self.shape = 'circle'
 		self.c = (center_point[0],center_point[1]) 
@@ -80,49 +80,7 @@ class euCircle:
 ########################################################################################################
 #                                     end of basic object definitions                                  #
 ########################################################################################################
-"""
-def draw_line(ptA, ptB, name=None, show=True):
-	if show == True:
-		if name == None:
-			globals()["line"+str(ptA)+str(ptB)] = euLine(ptA, ptB, "line"+str(ptA)+str(ptB))
-		else:
-			name=str(name)
-			globals()[name] = euLine(ptA, ptB, name)
-		seac.pu()
-		seac.setpos(ptA[0], ptA[1])
-		seac.pd()
-		seac.setpos(ptB[0], ptB[1])
-		seac.pu()
-	else:
-		globals()["line"+str(ptA)+str(ptB)] = euLine(ptA, ptB, "line"+str(ptA)+str(ptB))
 
-		
-def draw_circle(ptA, ptB, name=None, show=True):
-	# ptA is center, ptB is radial point
-	if show == True:
-		#make the newly generated euCircle globally accessible as a variable:
-		if name == None:
-			globals()["circ"+str(ptA)+str(ptB)] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
-		else:
-			name=str(name)
-			globals()[name] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]), name)
-		#draw the circle:
-		seac.pu()
-		seac.setpos(ptB[0], ptB[1])
-		seac.setheading(seac.towards((ptA[0],ptA[1]))-90)
-		radius = seac.distance((ptA[0],ptA[1]))
-		seac.pd()
-		seac.circle(radius)
-		seac.pu()
-		
-	else:
-		if name == None:
-			globals()["circ"+str(ptA)+str(ptB)] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
-		else:
-			name=str(name)
-			globals()[name] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]), name)
-			
-"""		
 def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=True):
 	# simple 2x2 determinant:
 	def _2x2det(a,b,c,d):
@@ -308,54 +266,55 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			seac.dot()
 			seac.home()
 		
+if __name__ == "__main__":
+	#testing:
+	#define a point, its coordinates are arbitrary:
+	A = euPoint(300,50, "A")
+	#seac.setpos(A.xy)
+	#seac.dot()
 
-#testing:
-#define a point, its coordinates are arbitrary:
-A = euPoint(300,50, "A")
-#seac.setpos(A.xy)
-#seac.dot()
+	#define a point, its coordinates are arbitrary:
+	B = euPoint(20, -39, "B")
+	#seac.setpos(B.xy)
+	#seac.dot()
 
-#define a point, its coordinates are arbitrary:
-B = euPoint(20, -39, "B")
-#seac.setpos(B.xy)
-#seac.dot()
+	C = euPoint(80, 130, "C")
+	#seac.setpos(C.xy)
+	#seac.dot()
 
-C = euPoint(80, 130, "C")
-#seac.setpos(C.xy)
-#seac.dot()
+	D = euPoint(80, -50, "D")
+	#seac.setpos(D.xy)
+	#seac.dot()
 
-D = euPoint(80, -50, "D")
-#seac.setpos(D.xy)
-#seac.dot()
-
-lineAB = euLine(A,B, 'test')
-lineCD = euLine(C,D, 'test2')
-seac.color("blue")
-#draw_line(A,B)
-#draw_line(C,D)
-X =intersect(lineAB, lineCD, name1='gamma')
-circXA = euCircle(X,A,"circle")
-circAD = euCircle(A,D, "circle2")
-Q,R = intersect(circXA, circAD, name1="top", name2="bottom")
-lineQR = euLine(Q,R, name="test3")
-'''
-draw_circle(A,B, show=False)
-draw_circle(B,A, show=False)
-seac.color("red")
-draw_line(A,B)
-seac.color("blue")
-intersect(circAB, circBA, name1='E',show2=False)
-draw_line(E,A)
-seac.color("green")
-draw_line(E,B)
-seac.color("green")
-draw_circle(C,B)
-seac.color("red")
-draw_circle(C,A)
-seac.color("blue")
-draw_circle(C,E)
-intersect(circCE, lineAB, name1 ='beta', show1=False)
-intersect(lineEA, circCA, name1='delta', show2=False)
-#
-'''
-turtle.exitonclick()
+	lineAB = euLine(A,B, 'test')
+	lineCD = euLine(C,D, 'test2')
+	seac.color("blue")
+	#draw_line(A,B)
+	#draw_line(C,D)
+	X =intersect(lineAB, lineCD, name1='gamma')
+	circXA = euCircle(X,A,"circle")
+	circAD = euCircle(A,D, "circle2")
+	Q,R = intersect(circXA, circAD, name1="top", name2="bottom")
+	lineQR = euLine(Q,R, name="test3")
+	G = intersect(lineQR, lineAB)
+	'''
+	draw_circle(A,B, show=False)
+	draw_circle(B,A, show=False)
+	seac.color("red")
+	draw_line(A,B)
+	seac.color("blue")
+	intersect(circAB, circBA, name1='E',show2=False)
+	draw_line(E,A)
+	seac.color("green")
+	draw_line(E,B)
+	seac.color("green")
+	draw_circle(C,B)
+	seac.color("red")
+	draw_circle(C,A)
+	seac.color("blue")
+	draw_circle(C,E)
+	intersect(circCE, lineAB, name1 ='beta', show1=False)
+	intersect(lineEA, circCA, name1='delta', show2=False)
+	#
+	'''
+	turtle.exitonclick()
