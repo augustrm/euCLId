@@ -2,12 +2,14 @@ import turtle
 from math import cos, sin, sqrt, pi
 
 screen = turtle.Screen()
+screen.setup(width=0.75,height=0.80,startx=None,starty=None)
+screen.title("euCLId")
 screen.screensize(2000,2000)
-turtle.delay(0)
+#turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
-seac.speed(1)
+seac.speed(5)
 seac.home()
 seac.pu()
 seac.color("red")
@@ -122,38 +124,26 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			
 			# add intersect points to globals; in form of "circAB_intersect_circBA_1" if namestrings are left unset:
 			# otherwise the created points are named whatever namestring is supplied.
+
+			if show != True:
+				show1 = False
+				show2 = False
+					
 			if name1 == None:
-				int_1 =  euPoint(x3, y3, obj1.name+"_intersect_"+obj2.name+"_1")
+				int_1 =  euPoint(x3, y3, obj1.name+"_intersect_"+obj2.name+"_1",show1)
 			else:
 				name1=str(name1) #sanitize name1 so it is always a string
-				int_1 = euPoint(x3, y3, name1)
+				int_1 = euPoint(x3, y3, name1, show1)
 			
 			if name2 == None:
-				int_2 =  euPoint(x4, y4, obj1.name+"_intersect_"+obj2.name+"_2")
+				int_2 =  euPoint(x4, y4, obj1.name+"_intersect_"+obj2.name+"_2",show2)
 			else:
 				name2=str(name2) #sanitize name2 so it is always a string
-				int_2 =  euPoint(x4, y4, name2)
+				int_2 =  euPoint(x4, y4, name2,show2)
 			return int_1, int_2
 
-			if show == True:
-				if show1 == True:
-					#draw intersect 1:
-					seac.pu()
-					seac.setpos(x3,y3)
-					seac.pd()
-					seac.dot()
-					seac.pu()
-					
-				if show2 == True:
-					#draw intersect 2:
-					seac.pu()
-					seac.setpos(x4,y4)
-					seac.pd()
-					seac.dot()
-					seac.pu()
-			#send seac to origin (0,0)
+			
 			seac.home
-			return [(x3,y3), (x4,y4)]
 	
 	# Intersect of a line and a circle or a circle and a line:
 	#http://mathworld.wolfram.com/Circle-LineIntersection.html
@@ -265,7 +255,12 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			seac.setpos(x_line_int, y_line_int)
 			seac.dot()
 			seac.home()
-		
+
+
+
+
+
+	
 if __name__ == "__main__":
 	#testing:
 	#define a point, its coordinates are arbitrary:
