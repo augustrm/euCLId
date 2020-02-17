@@ -6,17 +6,23 @@ screen.screensize(2000,2000)
 turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
-seac.ht()
-seac.speed(0)
+#seac.ht()
+seac.speed(1)
 seac.home()
 seac.pu()
 seac.color("red")
 
 class euPoint:
-	def __init__(self, x, y, name):
+	def __init__(self, x, y, name="default euPoint name", show=True):
 		self.xy = (x,y)
 		self.name = name
 		self.shape = 'point'
+		self.show = show
+		# rolling "draw" functionality into class definitions
+		if self.show == True:
+			seac.pu()
+			seac.setpos(self.xy[0], self.xy[1])
+			seac.dot()
 	def __iter__(self):
 		yield(self.xy)
 	def __getitem__(self, i):
@@ -26,14 +32,23 @@ class euPoint:
 
 		
 class euLine:
-	def __init__(self, ptA, ptB, name):
+	def __init__(self, ptA, ptB, name="default euLine name", show=True):
 		self.name = name
 		self.shape = 'line'
 		self.ptA = (ptA[0], ptA[1])
 		self.ptB = (ptB[0], ptB[1])
+		self.show = show
 		# Conditional necessary to handle edge case of vertical and close to vertical lines:
 		if self.ptB[0]-self.ptA[0] != 0:
 			self.slope = (self.ptB[1] - self.ptA[1]) / (self.ptB[0] - self.ptA[0])
+			
+		# rolling depracated "draw_line()" method into euLine class:
+		if self.show == True:
+			seac.pu()
+			seac.setpos(self.ptA[0], self.ptA[1])
+			seac.pd()
+			seac.setpos(self.ptB[0], self.ptB[1])
+			seac.pu()
 	def __str__(self):
 		return self.name
 	#
@@ -44,59 +59,28 @@ class euLine:
 		pass
 
 class euCircle:
-	def __init__(self, center_point, radial_point, name):
+	def __init__(self, center_point, radial_point, name="default euCircle name", show=True):
 		self.name = name
 		self.shape = 'circle'
 		self.c = (center_point[0],center_point[1]) 
 		self.r_p = (radial_point[0], radial_point[1])
 		self.radius = sqrt((self.r_p[0]-self.c[0])**2 + (self.r_p[1]-self.c[1])**2)
+		self.show = show
+		if self.show == True:
+			seac.pu()
+			seac.setpos(self.r_p[0], self.r_p[1])
+			seac.setheading(seac.towards((self.c[0],self.c[1]))-90)
+			#radius = seac.distance((self.ptA[0],ptA[1]))
+			seac.pd()
+			seac.circle(self.radius)
+			seac.pu()
 	def __str__(self):
 		return self.name
 			
 ########################################################################################################
 #                                     end of basic object definitions                                  #
 ########################################################################################################
-def draw_line(ptA, ptB, name=None, show=True):
-	if show == True:
-		if name == None:
-			globals()["line"+str(ptA)+str(ptB)] = euLine(ptA, ptB, "line"+str(ptA)+str(ptB))
-		else:
-			name=str(name)
-			globals()[name] = euLine(ptA, ptB, name)
-		seac.pu()
-		seac.setpos(ptA[0], ptA[1])
-		seac.pd()
-		seac.setpos(ptB[0], ptB[1])
-		seac.pu()
-	else:
-		globals()["line"+str(ptA)+str(ptB)] = euLine(ptA, ptB, "line"+str(ptA)+str(ptB))
 
-		
-def draw_circle(ptA, ptB, name=None, show=True):
-	if show == True:
-		#make the newly generated euCircle globally accessible as a variable:
-		if name == None:
-			globals()["circ"+str(ptA)+str(ptB)] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
-		else:
-			name=str(name)
-			globals()[name] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]), name)
-		#draw the circle:
-		seac.pu()
-		seac.setpos(ptB[0], ptB[1])
-		seac.setheading(seac.towards((ptA[0],ptA[1]))-90)
-		radius = seac.distance((ptA[0],ptA[1]))
-		seac.pd()
-		seac.circle(radius)
-		seac.pu()
-		
-	else:
-		if name == None:
-			globals()["circ"+str(ptA)+str(ptB)] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]),"circ"+str(ptA)+str(ptB))
-		else:
-			name=str(name)
-			globals()[name] = euCircle((ptA[0], ptA[1]), (ptB[0], ptB[1]), name)
-			
-			
 def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=True):
 	# simple 2x2 determinant:
 	def _2x2det(a,b,c,d):
@@ -139,17 +123,18 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			# add intersect points to globals; in form of "circAB_intersect_circBA_1" if namestrings are left unset:
 			# otherwise the created points are named whatever namestring is supplied.
 			if name1 == None:
-				globals()[obj1.name+"_intersect_"+obj2.name+"_1"] = euPoint(x3, y3, obj1.name+"_intersect_"+obj2.name+"_1")
+				int_1 =  euPoint(x3, y3, obj1.name+"_intersect_"+obj2.name+"_1")
 			else:
 				name1=str(name1) #sanitize name1 so it is always a string
-				globals()[name1] = euPoint(x3, y3, name1)
+				int_1 = euPoint(x3, y3, name1)
 			
 			if name2 == None:
-				globals()[obj1.name+"_intersect_"+obj2.name+"_2"] = euPoint(x4, y4, obj1.name+"_intersect_"+obj2.name+"_2")
+				int_2 =  euPoint(x4, y4, obj1.name+"_intersect_"+obj2.name+"_2")
 			else:
 				name2=str(name2) #sanitize name2 so it is always a string
-				globals()[name2] = euPoint(x4, y4, name2)
-			
+				int_2 =  euPoint(x4, y4, name2)
+			return int_1, int_2
+
 			if show == True:
 				if show1 == True:
 					#draw intersect 1:
@@ -190,20 +175,21 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			x_int2 = ((D * d_y - _signum(d_y) * d_x * sqrt((r**2 * d_r**2) - D**2))/d_r**2) - x_delta
 			y_int2 = ((-D * d_x - abs(d_y) * sqrt((r**2 * d_r**2) - D**2))/d_r**2) - y_delta
 			
-			# add intersect points to globals; in form of "circAB_intersect_circBA_1" if namestrings are left unset:
-			# otherwise the created points are named whatever namestring is supplied.
+			# 
 			if name1 == None:
-				globals()[obj1.name+"_intersect_"+obj2.name+"_1"] = euPoint(x_int1, y_int1, obj1.name+"_intersect_"+obj2.name+"_1")
+				int_1 = euPoint(x_int1, y_int1, obj1.name+"_intersect_"+obj2.name+"_1")
 			else:
 				name1=str(name1) #sanitize name1 so it is always a string
-				globals()[name1] = euPoint(x_int1, y_int1, name1)
+				int_1 = euPoint(x_int1, y_int1, name1)
 			
 			if name2 == None:
-				globals()[obj1.name+"_intersect_"+obj2.name+"_2"] = euPoint(x_int2, y_int2, obj1.name+"_intersect_"+obj2.name+"_2")
+				int_2 =  euPoint(x_int2, y_int2, obj1.name+"_intersect_"+obj2.name+"_2")
 			else:
 				name2=str(name2) #sanitize name2 so it is always a string
-				globals()[name2] = euPoint(x_int2, y_int2, name2)
-				
+				int_2 = euPoint(x_int2, y_int2, name2)
+			
+			return int_1, int_2
+			
 			if show == True:
 				if show1 == True:
 					seac.pu()
@@ -233,20 +219,21 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			x_int2 = ((D * d_y - _signum(d_y) * d_x * sqrt((r**2 * d_r**2) - D**2))/d_r**2) - x_delta
 			y_int2 = ((-D * d_x - abs(d_y) * sqrt((r**2 * d_r**2) - D**2))/d_r**2) - y_delta
 			
-			# add intersect points to globals; in form of "circAB_intersect_circBA_1" if namestrings are left unset:
-			# otherwise the created points are named whatever namestring is supplied.
+			# 
 			if name1 == None:
-				globals()[obj1.name+"_intersect_"+obj2.name+"_1"] = euPoint(x_int1, y_int1, obj1.name+"_intersect_"+obj2.name+"_1")
+				int_1 = euPoint(x_int1, y_int1, obj1.name+"_intersect_"+obj2.name+"_1")
 			else:
 				name1=str(name1) #sanitize name1 so it is always a string
-				globals()[name1] = euPoint(x_int1, y_int1, name1)
+				int_1 = euPoint(x_int1, y_int1, name1)
 			
 			if name2 == None:
-				globals()[obj1.name+"_intersect_"+obj2.name+"_2"] = euPoint(x_int2, y_int2, obj1.name+"_intersect_"+obj2.name+"_2")
+				int_2 =  euPoint(x_int2, y_int2, obj1.name+"_intersect_"+obj2.name+"_2")
 			else:
 				name2=str(name2) #sanitize name2 so it is always a string
-				globals()[name2] = euPoint(x_int2, y_int2, name2)
-				
+				int_2 = euPoint(x_int2, y_int2, name2)
+			
+			return int_1, int_2
+
 			if show == True:
 				if show1 == True:
 					seac.pu()
@@ -268,10 +255,10 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 		y_line_int = (_2x2det(_2x2det(x1, y1, x2, y2), (y1-y2), _2x2det(x3, y3, x4, y4), (y3-y4)))/(_2x2det((x1-x2), (y1-y2), (x3-x4), (y3-y4)))
 		
 		if name1 == None:
-			globals()[obj1.name+"_intersect_"+obj2.name+"_1"] = euPoint(x_line_int, y_line_int, obj1.name+"_intersect_"+obj2.name+"_1")
+			return euPoint(x_line_int, y_line_int, obj1.name+"_intersect_"+obj2.name+"_1")
 		else:
 			name1=str(name1) #sanitize name1 so it is always a string
-			globals()[name1] = euPoint(x_line_int, y_line_int, name1)
+			return euPoint(x_line_int, y_line_int, name1)
 
 		if show == True:
 			seac.pu()
@@ -279,48 +266,55 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			seac.dot()
 			seac.home()
 		
+if __name__ == "__main__":
+	#testing:
+	#define a point, its coordinates are arbitrary:
+	A = euPoint(300,50, "A")
+	#seac.setpos(A.xy)
+	#seac.dot()
 
-#testing:
-#define a point, its coordinates are arbitrary:
-A = euPoint(30,50, "A")
-seac.setpos(A.xy)
-seac.dot()
+	#define a point, its coordinates are arbitrary:
+	B = euPoint(20, -39, "B")
+	#seac.setpos(B.xy)
+	#seac.dot()
 
-#define a point, its coordinates are arbitrary:
-B = euPoint(20, -39, "B")
-seac.setpos(B.xy)
-seac.dot()
+	C = euPoint(80, 130, "C")
+	#seac.setpos(C.xy)
+	#seac.dot()
 
-C = euPoint(80, 130, "C")
-seac.setpos(C.xy)
-seac.dot()
+	D = euPoint(80, -50, "D")
+	#seac.setpos(D.xy)
+	#seac.dot()
 
-D = euPoint(80, -50, "D")
-seac.setpos(D.xy)
-seac.dot()
-
-seac.color("blue")
-draw_line(A,B)
-draw_line(C,D)
-intersect(lineAB, lineCD, name1='gamma')
-'''
-draw_circle(A,B, show=False)
-draw_circle(B,A, show=False)
-seac.color("red")
-draw_line(A,B)
-seac.color("blue")
-intersect(circAB, circBA, name1='E',show2=False)
-draw_line(E,A)
-seac.color("green")
-draw_line(E,B)
-seac.color("green")
-draw_circle(C,B)
-seac.color("red")
-draw_circle(C,A)
-seac.color("blue")
-draw_circle(C,E)
-intersect(circCE, lineAB, name1 ='beta', show1=False)
-intersect(lineEA, circCA, name1='delta', show2=False)
-#
-'''
-turtle.exitonclick()
+	lineAB = euLine(A,B, 'test')
+	lineCD = euLine(C,D, 'test2')
+	seac.color("blue")
+	#draw_line(A,B)
+	#draw_line(C,D)
+	X =intersect(lineAB, lineCD, name1='gamma')
+	circXA = euCircle(X,A,"circle")
+	circAD = euCircle(A,D, "circle2")
+	Q,R = intersect(circXA, circAD, name1="top", name2="bottom")
+	lineQR = euLine(Q,R, name="test3")
+	G = intersect(lineQR, lineAB)
+	'''
+	draw_circle(A,B, show=False)
+	draw_circle(B,A, show=False)
+	seac.color("red")
+	draw_line(A,B)
+	seac.color("blue")
+	intersect(circAB, circBA, name1='E',show2=False)
+	draw_line(E,A)
+	seac.color("green")
+	draw_line(E,B)
+	seac.color("green")
+	draw_circle(C,B)
+	seac.color("red")
+	draw_circle(C,A)
+	seac.color("blue")
+	draw_circle(C,E)
+	intersect(circCE, lineAB, name1 ='beta', show1=False)
+	intersect(lineEA, circCA, name1='delta', show2=False)
+	#
+	'''
+	turtle.exitonclick()
