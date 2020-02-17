@@ -2,12 +2,18 @@ import turtle
 from math import cos, sin, sqrt, pi
 
 screen = turtle.Screen()
+screen.setup(width=0.75,height=0.80,startx=None,starty=None)
+screen.title("euCLId")
 screen.screensize(2000,2000)
-turtle.delay(0)
+#turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
+<<<<<<< HEAD:euCLId.py
 seac.speed(1)
+=======
+seac.speed(5)
+>>>>>>> 05eee3054591615e17244992ea4d315f87a3523c:euCLId_core.py
 seac.home()
 seac.pu()
 seac.color("red")
@@ -122,7 +128,13 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			
 			# add intersect points to globals; in form of "circAB_intersect_circBA_1" if namestrings are left unset:
 			# otherwise the created points are named whatever namestring is supplied.
+
+			if show != True:
+				show1 = False
+				show2 = False
+					
 			if name1 == None:
+<<<<<<< HEAD:euCLId.py
 				int_1 =  euPoint(x3, y3, obj1.name+"_intersect_"+obj2.name+"_1")
 			else:
 				name1=str(name1) #sanitize name1 so it is always a string
@@ -152,8 +164,22 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 					seac.dot()
 					seac.pu()
 			#send seac to origin (0,0)
+=======
+				int_1 =  euPoint(x3, y3, obj1.name+"_intersect_"+obj2.name+"_1",show1)
+			else:
+				name1=str(name1) #sanitize name1 so it is always a string
+				int_1 = euPoint(x3, y3, name1, show1)
+			
+			if name2 == None:
+				int_2 =  euPoint(x4, y4, obj1.name+"_intersect_"+obj2.name+"_2",show2)
+			else:
+				name2=str(name2) #sanitize name2 so it is always a string
+				int_2 =  euPoint(x4, y4, name2,show2)
+			return int_1, int_2
+
+			
+>>>>>>> 05eee3054591615e17244992ea4d315f87a3523c:euCLId_core.py
 			seac.home
-			return [(x3,y3), (x4,y4)]
 	
 	# Intersect of a line and a circle or a circle and a line:
 	#http://mathworld.wolfram.com/Circle-LineIntersection.html
@@ -265,6 +291,7 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			seac.setpos(x_line_int, y_line_int)
 			seac.dot()
 			seac.home()
+<<<<<<< HEAD:euCLId.py
 		
 if __name__ == "__main__":
 	#testing:
@@ -286,6 +313,34 @@ if __name__ == "__main__":
 	#seac.setpos(D.xy)
 	#seac.dot()
 
+=======
+
+
+
+
+
+	
+if __name__ == "__main__":
+	#testing:
+	#define a point, its coordinates are arbitrary:
+	A = euPoint(300,50, "A")
+	#seac.setpos(A.xy)
+	#seac.dot()
+
+	#define a point, its coordinates are arbitrary:
+	B = euPoint(20, -39, "B")
+	#seac.setpos(B.xy)
+	#seac.dot()
+
+	C = euPoint(80, 130, "C")
+	#seac.setpos(C.xy)
+	#seac.dot()
+
+	D = euPoint(80, -50, "D")
+	#seac.setpos(D.xy)
+	#seac.dot()
+
+>>>>>>> 05eee3054591615e17244992ea4d315f87a3523c:euCLId_core.py
 	lineAB = euLine(A,B, 'test')
 	lineCD = euLine(C,D, 'test2')
 	seac.color("blue")
