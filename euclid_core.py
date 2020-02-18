@@ -2,14 +2,14 @@ import turtle
 from math import cos, sin, sqrt, pi
 
 screen = turtle.Screen()
-screen.setup(width=0.75,height=0.80,startx=None,starty=None)
+screen.setup(width=0.90,height=0.90,startx=None,starty=None)
 screen.title("euCLId")
 screen.screensize(2000,2000)
 #turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
-seac.speed(5)
+seac.speed(7)
 seac.home()
 seac.pu()
 seac.color("red")
@@ -130,16 +130,16 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 				show2 = False
 					
 			if name1 == None:
-				int_1 =  euPoint(x3, y3, obj1.name+"_intersect_"+obj2.name+"_1",show1)
+				int_1 =  euPoint(x3, y3, name=obj1.name+"_intersect_"+obj2.name+"_1",show=show1)
 			else:
 				name1=str(name1) #sanitize name1 so it is always a string
-				int_1 = euPoint(x3, y3, name1, show1)
+				int_1 = euPoint(x3, y3, name=name1, show=show1)
 			
 			if name2 == None:
-				int_2 =  euPoint(x4, y4, obj1.name+"_intersect_"+obj2.name+"_2",show2)
+				int_2 =  euPoint(x4, y4, name=obj1.name+"_intersect_"+obj2.name+"_2",show=show2)
 			else:
 				name2=str(name2) #sanitize name2 so it is always a string
-				int_2 =  euPoint(x4, y4, name2,show2)
+				int_2 =  euPoint(x4, y4, name=name2,show=show2)
 			return int_1, int_2
 			seac.home
 	
@@ -165,16 +165,16 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			
 			# 
 			if name1 == None:
-				int_1 = euPoint(x_int1, y_int1, obj1.name+"_intersect_"+obj2.name+"_1")
+				int_1 = euPoint(x_int1, y_int1, name=obj1.name+"_intersect_"+obj2.name+"_1",show=show1)
 			else:
 				name1=str(name1) #sanitize name1 so it is always a string
-				int_1 = euPoint(x_int1, y_int1, name1)
+				int_1 = euPoint(x_int1, y_int1, name=name1, show=show1)
 			
 			if name2 == None:
-				int_2 =  euPoint(x_int2, y_int2, obj1.name+"_intersect_"+obj2.name+"_2")
+				int_2 =  euPoint(x_int2, y_int2, name=obj1.name+"_intersect_"+obj2.name+"_1",show=show1)
 			else:
 				name2=str(name2) #sanitize name2 so it is always a string
-				int_2 = euPoint(x_int2, y_int2, name2)
+				int_2 = euPoint(x_int2, y_int2, name=name2, show=show2)
 			
 			return int_1, int_2
 			
@@ -201,7 +201,7 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 		D = _2x2det(x1, x2, y1, y2)
 
 		# conditional to handle case of line and circle not intersecting:
-		if (((r**2)*(d_r**2))-D) < 0:
+		if (((r**2)*(d_r**2))-D) >= 0:
 			x_int1 = ((D * d_y + _signum(d_y) * d_x * sqrt((r**2 * d_r**2) - D**2))/d_r**2) - x_delta
 			y_int1 = ((-D * d_x + abs(d_y) * sqrt((r**2 * d_r**2) - D**2))/d_r**2) - y_delta
 			x_int2 = ((D * d_y - _signum(d_y) * d_x * sqrt((r**2 * d_r**2) - D**2))/d_r**2) - x_delta
@@ -209,16 +209,16 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			
 			# 
 			if name1 == None:
-				int_1 = euPoint(x_int1, y_int1, obj1.name+"_intersect_"+obj2.name+"_1")
+				int_1 = euPoint(x_int1, y_int1, name=obj1.name+"_intersect_"+obj2.name+"_1",show=show1)
 			else:
 				name1=str(name1) #sanitize name1 so it is always a string
-				int_1 = euPoint(x_int1, y_int1, name1)
+				int_1 = euPoint(x_int1, y_int1, name=name1, show=show1)
 			
 			if name2 == None:
-				int_2 =  euPoint(x_int2, y_int2, obj1.name+"_intersect_"+obj2.name+"_2")
+				int_2 =  euPoint(x_int2, y_int2, name=obj1.name+"_intersect_"+obj2.name+"_1",show=show2)
 			else:
 				name2=str(name2) #sanitize name2 so it is always a string
-				int_2 = euPoint(x_int2, y_int2, name2)
+				int_2 = euPoint(x_int2, y_int2, name=name2, show=show2)
 			
 			return int_1, int_2
 
@@ -255,7 +255,7 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			seac.home()
 	
 if __name__ == "__main__":
-	#testing:
+	"""#testing:
 	#define a point, its coordinates are arbitrary:
 	A = euPoint(300,50, "A")
 	#seac.setpos(A.xy)
@@ -304,5 +304,12 @@ if __name__ == "__main__":
 	intersect(circCE, lineAB, name1 ='beta', show1=False)
 	intersect(lineEA, circCA, name1='delta', show2=False)
 	#
-	'''
+	"""
+	A = euPoint(0,0)
+	B = euPoint(100,100)
+	C = euPoint(-200,-90)
+#bisect = angle_bisector(A,B,C,show_process=True)
+	AB = euLine(A,B)
+	circ = euCircle((50,20),(25,25))
+	X,Y = intersect(circ, AB)
 	turtle.exitonclick()
