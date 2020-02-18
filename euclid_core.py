@@ -5,11 +5,11 @@ screen = turtle.Screen()
 screen.setup(width=0.75,height=0.80,startx=None,starty=None)
 screen.title("euCLId")
 screen.screensize(2000,2000)
-#turtle.delay(0)
+turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
-seac.speed(7)
+seac.speed(0)
 seac.home()
 seac.pu()
 seac.color("red")
@@ -34,31 +34,34 @@ class euPoint:
 
 		
 class euLine:
-	def __init__(self, ptA, ptB, name="default euLine name", show=True):
+	def __init__(self, ptA, ptB, name="default euLine name", show=True, produce=False):
 		self.name = name
 		self.shape = 'line'
 		self.ptA = (ptA[0], ptA[1])
 		self.ptB = (ptB[0], ptB[1])
 		self.show = show
+		self.produce = produce
 		# Conditional necessary to handle edge case of vertical and close to vertical lines:
 		if self.ptB[0]-self.ptA[0] != 0:
 			self.slope = (self.ptB[1] - self.ptA[1]) / (self.ptB[0] - self.ptA[0])
 			
 		# rolling depracated "draw_line()" method into euLine class:
 		if self.show == True:
-			seac.pu()
-			seac.setpos(self.ptA[0], self.ptA[1])
-			seac.pd()
-			seac.setpos(self.ptB[0], self.ptB[1])
-			seac.pu()
+			if produce == False:
+				seac.pu()
+				seac.setpos(self.ptA[0], self.ptA[1])
+				seac.pd()
+				seac.setpos(self.ptB[0], self.ptB[1])
+				seac.pu()
+			elif produce == True:
+				seac.pu()
+				# first term is screenbound, second term is Y value at screebound
+				seac.setpos(-0.5*screen.screensize()[0], self.slope*(-0.5*screen.screensize()[0] - self.ptA[0]) + self.ptA[1])
+				seac.pd()
+				seac.setpos(0.5*screen.screensize()[0], self.slope*(0.5*screen.screensize()[0] - self.ptA[0]) + self.ptA[1])
+				seac.pu()
 	def __str__(self):
 		return self.name
-	#
-	# Work on the "produce" method:
-	# Want to find way that will map only to the edge of the displayed area so system is dynamic
-	#
-	def produce(self):
-		pass
 
 class euCircle:
 	def __init__(self, center_point, radial_point, name="default euCircle name", show=True):
@@ -306,10 +309,11 @@ if __name__ == "__main__":
 	#
 	"""
 	A = euPoint(0,0)
-	B = euPoint(100,100)
-	C = euPoint(-200,-90)
+	B = euPoint(100,0)
+	#C = euPoint(-200,-90)
 #bisect = angle_bisector(A,B,C,show_process=True)
 	AB = euLine(A,B)
-	circ = euCircle((50,20),(25,25))
+	circ = euCircle((50,0),(200, 0))
 	X,Y = intersect(circ, AB)
+	print("X=",X.xy, " Y=",Y.xy)
 	turtle.exitonclick()
