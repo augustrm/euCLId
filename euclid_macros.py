@@ -1,13 +1,13 @@
 from euclid_core import *
 
-def midpoint(A,B=None, show_process=False):
+def midpoint(A,B=None, show_process=False, show_point=True):
 	if A.shape == 'line':
 		P,Q = A.ptA, A.ptB
 		templinePQ = euLine(P,Q,show=show_process)
 		tempcircPQ, tempcircQP = euCircle(P,Q, show=show_process), euCircle(Q,P, show=show_process)
 		tempX, tempY = intersect(tempcircPQ, tempcircQP, show=show_process)
 		templineXY = euLine(tempX, tempY, show=show_process)
-		M = intersect(templinePQ, templineXY)
+		M = intersect(templinePQ, templineXY, show=show_point)
 		return M
 
 	elif A.shape == 'point' and B != None:
@@ -15,7 +15,7 @@ def midpoint(A,B=None, show_process=False):
 		tempcircAB, tempcircBA = euCircle(A,B, show=show_process), euCircle(B,A, show=show_process)
 		tempX, tempY = intersect(tempcircAB, tempcircBA, show=show_process)
 		templineXY = euLine(tempX, tempY, show=show_process)
-		M = intersect(templineAB, templineXY)
+		M = intersect(templineAB, templineXY, show=show_point)
 		return M
 
 def angle_bisector(A,B,C,show_process=False,produce_line=False ):
@@ -36,10 +36,7 @@ def angle_bisector(A,B,C,show_process=False,produce_line=False ):
 	elif abs(dirA-dirC)>90:
 		d = lambda P, Q : math.sqrt((P[0] - Q[0])**2 + (P[1]-Q[1])**2)
 		point_list = [X1,Y1,X2,Y2]
-		for i in point_list:
-			
-
-
+		#UNDER CONSTRUCTION 
 		bisector = euLine(B, midpoint(Y1,X2), produce=produce_line)
 	
 	elif (dirA-dirC)==90:
@@ -52,7 +49,8 @@ def angle_bisector(A,B,C,show_process=False,produce_line=False ):
 		seac.forward(10)
 		M = euPoint(seac.xcor(), seac.ycor())
 		bisector = euLine(B,M, produce=produce_line)
-	return  bisector
+	#return  bisector
+	pass
 
 
 

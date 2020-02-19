@@ -9,7 +9,7 @@ turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
-seac.speed(0)
+seac.speed(10)
 seac.home()
 seac.pu()
 seac.color("red")
@@ -24,7 +24,7 @@ class euPoint:
 		if self.show == True:
 			seac.pu()
 			seac.setpos(self.xy[0], self.xy[1])
-			seac.dot()
+			seac.dot(7)
 	def __iter__(self):
 		yield(self.xy)
 	def __getitem__(self, i):
@@ -44,7 +44,8 @@ class euLine:
 		# Conditional necessary to handle edge case of vertical and close to vertical lines:
 		if self.ptB[0]-self.ptA[0] != 0:
 			self.slope = (self.ptB[1] - self.ptA[1]) / (self.ptB[0] - self.ptA[0])
-			
+		else:
+			self.slope = "vertical"
 		# rolling depracated "draw_line()" method into euLine class:
 		if self.show == True:
 			if produce == False:
@@ -54,12 +55,19 @@ class euLine:
 				seac.setpos(self.ptB[0], self.ptB[1])
 				seac.pu()
 			elif produce == True:
-				seac.pu()
-				# first term is screenbound, second term is Y value at screebound
-				seac.setpos(-0.5*screen.screensize()[0], self.slope*(-0.5*screen.screensize()[0] - self.ptA[0]) + self.ptA[1])
-				seac.pd()
-				seac.setpos(0.5*screen.screensize()[0], self.slope*(0.5*screen.screensize()[0] - self.ptA[0]) + self.ptA[1])
-				seac.pu()
+				if self.slope == "vertical":
+					seac.pu()
+					seac.setpos(self.ptA[0], -0.5*screen.screensize()[1])
+					seac.pd()
+					seac.setpos(self.ptA[0], 0.5*screen.screensize()[1])
+					seac.pu()
+				else:
+					seac.pu()
+					# first term is screenbound, second term is Y value at screebound
+					seac.setpos(-0.5*screen.screensize()[0], self.slope*(-0.5*screen.screensize()[0] - self.ptA[0]) + self.ptA[1])
+					seac.pd()
+					seac.setpos(0.5*screen.screensize()[0], self.slope*(0.5*screen.screensize()[0] - self.ptA[0]) + self.ptA[1])
+					seac.pu()
 	def __str__(self):
 		return self.name
 
@@ -167,6 +175,10 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			y_int2 = ((-D * d_x - abs(d_y) * sqrt((r**2 * d_r**2) - D**2))/d_r**2) - y_delta
 			
 			# 
+			if show != True:
+				show1 = False
+				show2 = False
+
 			if name1 == None:
 				int_1 = euPoint(x_int1, y_int1, name=obj1.name+"_intersect_"+obj2.name+"_1",show=show1)
 			else:
@@ -180,7 +192,7 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 				int_2 = euPoint(x_int2, y_int2, name=name2, show=show2)
 			
 			return int_1, int_2
-			
+			"""
 			if show == True:
 				if show1 == True:
 					seac.pu()
@@ -192,6 +204,7 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 					seac.setpos(x_int2,y_int2)
 					seac.dot()
 					seac.home()
+			"""
 	elif obj1.shape == 'circle' and obj2.shape == 'line':
 		r = obj1.radius
 		# adjust coordinates so circle is centered at origin for calculation:
@@ -211,6 +224,10 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			y_int2 = ((-D * d_x - abs(d_y) * sqrt((r**2 * d_r**2) - D**2))/d_r**2) - y_delta
 			
 			# 
+			if show != True:
+				show1 = False
+				show2 = False
+
 			if name1 == None:
 				int_1 = euPoint(x_int1, y_int1, name=obj1.name+"_intersect_"+obj2.name+"_1",show=show1)
 			else:
@@ -225,17 +242,6 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 			
 			return int_1, int_2
 
-			if show == True:
-				if show1 == True:
-					seac.pu()
-					seac.setpos(x_int1,y_int1)
-					seac.dot()
-					seac.home()
-				if show2 == True:
-					seac.pu()
-					seac.setpos(x_int2,y_int2)
-					seac.dot()
-					seac.home()
 	elif obj1.shape == 'line' and obj2.shape == 'line':
 		# http://mathworld.wolfram.com/Line-LineIntersection.html
 		x1, y1 = obj1.ptA[0], obj1.ptA[1]
@@ -245,17 +251,15 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 		x_line_int = (_2x2det(_2x2det(x1, y1, x2, y2), (x1-x2), _2x2det(x3, y3, x4, y4), (x3-x4)))/(_2x2det((x1-x2), (y1-y2), (x3-x4), (y3-y4)))
 		y_line_int = (_2x2det(_2x2det(x1, y1, x2, y2), (y1-y2), _2x2det(x3, y3, x4, y4), (y3-y4)))/(_2x2det((x1-x2), (y1-y2), (x3-x4), (y3-y4)))
 		
+		if show != True:
+				show1 = False
+				show2 = False
+
 		if name1 == None:
-			return euPoint(x_line_int, y_line_int, obj1.name+"_intersect_"+obj2.name+"_1")
+			return euPoint(x_line_int, y_line_int, obj1.name+"_intersect_"+obj2.name+"_1", show=show1)
 		else:
 			name1=str(name1) #sanitize name1 so it is always a string
-			return euPoint(x_line_int, y_line_int, name1)
-
-		if show == True:
-			seac.pu()
-			seac.setpos(x_line_int, y_line_int)
-			seac.dot()
-			seac.home()
+			return euPoint(x_line_int, y_line_int, name1, show=show1)
 	
 if __name__ == "__main__":
 	"""#testing:
