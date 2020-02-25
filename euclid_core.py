@@ -2,7 +2,7 @@ import turtle
 from math import cos, sin, sqrt, pi
 
 screen = turtle.Screen()
-screen.setup(width=0.75,height=0.80,startx=None,starty=None)
+screen.setup(width=600,height=600,startx=None,starty=None)
 screen.title("euCLId")
 screen.screensize(2000,2000)
 turtle.delay(10)

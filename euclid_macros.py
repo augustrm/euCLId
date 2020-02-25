@@ -56,7 +56,10 @@ def angle_bisector(A,B,C,show_process=False,produce_line=False ):
 
 
 def perpendicular(X,LINE, show_process=False, produce_line=False):
-	tempcirc1 = euCircle(X, LINE.ptA,show=show_process)
+	if X.xy == LINE.ptA:
+		tempcirc1 = euCircle(X, LINE.ptB,show=show_process)	
+	else:
+		tempcirc1 = euCircle(X, LINE.ptA,show=show_process)
 	A,B = intersect(tempcirc1, LINE, show=show_process, show1=show_process, show2=show_process)
 	templineAB = euLine(A,B,show=show_process)
 	tempcircAB, tempcircBA = euCircle(A,B, show=show_process), euCircle(B,A, show=show_process)
