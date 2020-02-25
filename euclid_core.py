@@ -33,6 +33,9 @@ class euPoint:
 		return self.xy[i]
 	def __str__(self):
 		return self.name
+	def tikz(self):
+		tikzstring = "\\draw "+str(self.xy)+" node {$"+ str(self.name)+ "$};"
+		return tikzstring
 
 		
 class euLine:
