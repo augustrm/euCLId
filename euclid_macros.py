@@ -19,6 +19,13 @@ def midpoint(A,B=None, show_process=False, show_point=True):
 		return M
 
 def angle_bisector(A,B,C,show_process=False,produce_line=False ):
+	###########################################################################
+	#                    --------------------------------                     #
+	#                   | CAUTION!!   UNDER CONSTUCTION! |                    #
+	#                    --------------------------------                     #
+	#                           |       |          |                          #
+	#                           V       V          V                          #
+	###########################################################################
 	templineAB = euLine(A,B, show=show_process)
 	templineBC = euLine(B,C, show=show_process)
 	seac.setpos(B[0],B[1])
@@ -31,6 +38,7 @@ def angle_bisector(A,B,C,show_process=False,produce_line=False ):
 	seac.setpos(B[0], B[1])
 	dirA = seac.towards(A.xy)
 	dirC = seac.towards(C.xy)
+
 	if 	abs(dirA-dirC)<90:
 		bisector = euLine(midpoint(X1,X2), midpoint(Y1,Y2), produce=produce_line)
 	elif abs(dirA-dirC)>90:

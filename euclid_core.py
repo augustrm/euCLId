@@ -5,21 +5,23 @@ screen = turtle.Screen()
 screen.setup(width=600,height=600,startx=None,starty=None)
 screen.title("euCLId")
 screen.screensize(2000,2000)
-turtle.delay(10)
+turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
-seac.speed(9)
+seac.speed(0)
 seac.home()
 seac.pu()
 seac.color("red")
 
 class euPoint:
+	instances = []
 	def __init__(self, x, y, name="default euPoint name", show=True):
 		self.xy = (x,y)
 		self.name = name
 		self.shape = 'point'
 		self.show = show
+		self.__class__.instances.append(self)
 		# rolling "draw" functionality into class definitions
 		if self.show == True:
 			seac.pu()
@@ -34,6 +36,7 @@ class euPoint:
 
 		
 class euLine:
+	instances = []
 	def __init__(self, ptA, ptB, name="default euLine name", show=True, produce=False):
 		self.name = name
 		self.shape = 'line'
@@ -41,6 +44,7 @@ class euLine:
 		self.ptB = (ptB[0], ptB[1])
 		self.show = show
 		self.produce = produce
+		self.__class__.instances.append(self)
 		# Conditional necessary to handle edge case of vertical and close to vertical lines:
 		if self.ptB[0]-self.ptA[0] != 0:
 			self.slope = (self.ptB[1] - self.ptA[1]) / (self.ptB[0] - self.ptA[0])
@@ -72,6 +76,7 @@ class euLine:
 		return self.name
 
 class euCircle:
+	instances = []
 	def __init__(self, center_point, radial_point, name="default euCircle name", show=True):
 		self.name = name
 		self.shape = 'circle'
@@ -79,6 +84,7 @@ class euCircle:
 		self.r_p = (radial_point[0], radial_point[1])
 		self.radius = sqrt((self.r_p[0]-self.c[0])**2 + (self.r_p[1]-self.c[1])**2)
 		self.show = show
+		self.__class__.instances.append(self)
 		if self.show == True:
 			seac.pu()
 			seac.setpos(self.r_p[0], self.r_p[1])
@@ -319,5 +325,11 @@ if __name__ == "__main__":
 	AB = euLine(A,B)
 	circ = euCircle((50,0),(200, 0))
 	X,Y = intersect(circ, AB)
-	print("X=",X.xy, " Y=",Y.xy)
+	for i in euPoint.instances:
+		print(i.name)
+	for i in euLine.instances:
+		print(i.name)
+	for i in euPoint.instances:
+		print(i.name)
 	turtle.exitonclick()
+	#Working on instance collection to make TikZ generation easier
