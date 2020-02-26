@@ -34,7 +34,7 @@ class euPoint:
 	def __str__(self):
 		return self.name
 	def tikz(self):
-		tikzstring = "\\draw "+str(self.xy)+" node {$"+ str(self.name)+ "$};"
+		tikzstring = "\\filldraw "+str(self.xy)+" circle (2);"
 		return tikzstring
 
 		
@@ -321,7 +321,7 @@ if __name__ == "__main__":
 	intersect(lineEA, circCA, name1='delta', show2=False)
 	#
 	"""
-	A = euPoint(0,0)
+	A = euPoint(0,0, name="A")
 	B = euPoint(100,0)
 	#C = euPoint(-200,-90)
 #bisect = angle_bisector(A,B,C,show_process=True)
@@ -334,5 +334,6 @@ if __name__ == "__main__":
 		print(i.name)
 	for i in euPoint.instances:
 		print(i.name)
+	print(A.tikz())
 	turtle.exitonclick()
 	#Working on instance collection to make TikZ generation easier
