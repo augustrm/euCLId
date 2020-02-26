@@ -77,6 +77,9 @@ class euLine:
 					seac.pu()
 	def __str__(self):
 		return self.name
+	def tikz(self):
+		tikzstring = "\\draw "+str(self.ptA)+" -- "+ str(self.ptB)+";"
+		return tikzstring
 
 class euCircle:
 	instances = []
@@ -98,6 +101,10 @@ class euCircle:
 			seac.pu()
 	def __str__(self):
 		return self.name
+	def tikz(self):
+		tikzstring = "\\draw "+str(self.c)+" circle("+str(self.radius)+");"
+		return tikzstring
+
 			
 ########################################################################################################
 #                                     end of basic object definitions                                  #
@@ -329,11 +336,11 @@ if __name__ == "__main__":
 	circ = euCircle((50,0),(200, 0))
 	X,Y = intersect(circ, AB)
 	for i in euPoint.instances:
-		print(i.name)
+		print(i.tikz())
 	for i in euLine.instances:
-		print(i.name)
-	for i in euPoint.instances:
-		print(i.name)
+		print(i.tikz())
+	for i in euCircle.instances:
+		print(i.tikz())
 	print(A.tikz())
 	turtle.exitonclick()
 	#Working on instance collection to make TikZ generation easier
