@@ -1,1 +1,5 @@
 .vscode
+euCLId.pyc
+euclid_core.pyc
+euclid_macros.pyc
+__pycache__
