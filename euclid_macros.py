@@ -35,30 +35,14 @@ def angle_bisector(A,B,C,show_process=False,produce_line=False ):
 	circBR = euCircle(B,Rpoint, show=show_process)
 	X1, Y1 = intersect(circBR, templineAB, show=show_process, show1=show_process, show2=show_process)
 	X2, Y2 = intersect(circBR, templineBC, show=show_process, show1=show_process, show2=show_process)
-	seac.setpos(B[0], B[1])
-	dirA = seac.towards(A.xy)
-	dirC = seac.towards(C.xy)
-
-	if 	abs(dirA-dirC)<90:
-		bisector = euLine(midpoint(X1,X2), midpoint(Y1,Y2), produce=produce_line)
-	elif abs(dirA-dirC)>90:
-		d = lambda P, Q : math.sqrt((P[0] - Q[0])**2 + (P[1]-Q[1])**2)
-		point_list = [X1,Y1,X2,Y2]
-		#UNDER CONSTRUCTION 
-		bisector = euLine(B, midpoint(Y1,X2), produce=produce_line)
-	
-	elif (dirA-dirC)==90:
-		seac.setheading(seac.towards(A.xy)-45)
-		seac.forward(5)
-		M = euPoint(seac.xcor(), seac.ycor())
-		bisector = euLine(B,M, produce=produce_line)
-	elif (dirA-dirC)== -90:
-		seac.setheading(seac.towards(A.xy)+45)
-		seac.forward(10)
-		M = euPoint(seac.xcor(), seac.ycor())
-		bisector = euLine(B,M, produce=produce_line)
-	#return  bisector
-	pass
+	# quick distance functions to decide on which of the 4 points returned by interesects is closest to points of interest:
+	dA = lambda P : sqrt((P[0] - A[0])**2 + (P[1] - A[1])**2)
+	dC = lambda P : sqrt((P[0] - C[0])**2 + (P[1] - C[1])**2)
+	point_list = [X1,Y1,X2,Y2]
+	X_true = sorted(point_list, key=dA)[0]
+	Y_true = sorted(point_list, key=dC)[0]
+	bisector = euLine(B, midpoint(X_true, Y_true), produce=produce_line)
+	return bisector
 
 
 
@@ -79,8 +63,8 @@ def perpendicular(X,LINE, show_process=False, produce_line=False):
 
 if __name__ == "__main__":
 	A = euPoint(0,0)
-	B = euPoint(89,190)
-	C = euPoint(-200,0)
+	B = euPoint(-300,-190)
+	C = euPoint(200,0)
 	#M = midpoint(A,B)
 	lineAC = euLine(A,C)
 
@@ -89,7 +73,7 @@ if __name__ == "__main__":
 	#lineOM = euLine(O,M)
 	#lineMA = euLine(M,A)
 	#angle_bisector(A,B,C, show_process=True, produce_line=True)
-	angle_bisector(B,A,C, show_process=True, produce_line=True)
+	angle_bisector(B,A,C, show_process=False, produce_line=True)
 	#angle_bisector(B,C,A, show_process=True, produce_line=True)
 	#p = perpendicular(B, lineAC, produce_line=True)
 	turtle.exitonclick()
