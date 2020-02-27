@@ -2,7 +2,7 @@ import turtle
 from math import cos, sin, sqrt, pi
 
 screen = turtle.Screen()
-screen.setup(width=600,height=600,startx=None,starty=None)
+screen.setup(width=700,height=700,startx=None,starty=None)
 screen.title("euCLId")
 screen.screensize(2000,2000)
 turtle.delay(0)
@@ -328,19 +328,25 @@ if __name__ == "__main__":
 	intersect(lineEA, circCA, name1='delta', show2=False)
 	#
 	"""
-	A = euPoint(0,0, name="A")
-	B = euPoint(100,0)
+	A = euPoint(0,200, name="A")
+	B = euPoint(100,200)
+	C = euPoint(200,300)
+	AB = euLine(A,B)
+	BC = euLine(B,C)
+	AC = euLine(A,C)
+	circ = euCircle(A,B)
+	P,Q = intersect(circ, AB)
+	M,N = intersect(circ, AC)
+	seac.setpos(P.xy)
+	seac.write("P", font=("Arial",12,"normal"))
+	seac.setpos(Q.xy)
+	seac.write("Q", font=("Arial",12,"normal"))
+	seac.setpos(M.xy)
+	seac.write("M", font=("Arial",12,"normal"))
+	seac.setpos(N.xy)
+	seac.write("N", font=("Arial",12,"normal"))
 	#C = euPoint(-200,-90)
 #bisect = angle_bisector(A,B,C,show_process=True)
-	AB = euLine(A,B)
-	circ = euCircle((50,0),(200, 0))
-	X,Y = intersect(circ, AB)
-	for i in euPoint.instances:
-		print(i.tikz())
-	for i in euLine.instances:
-		print(i.tikz())
-	for i in euCircle.instances:
-		print(i.tikz())
-	print(A.tikz())
+	
 	turtle.exitonclick()
 	#Working on instance collection to make TikZ generation easier
