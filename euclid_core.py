@@ -15,10 +15,6 @@ seac.home()
 seac.pu()
 seac.color("red")
 
-def show():
-	screen.update()
-	return None
-
 class euPoint:
 	instances = []
 	def __init__(self, x, y, name="default euPoint name", show=True):
@@ -207,25 +203,13 @@ def intersect(obj1, obj2, name1=None, name2=None, show=True, show1=True, show2=T
 				int_1 = euPoint(x_int1, y_int1, name=name1, show=show1)
 			
 			if name2 == None:
-				int_2 =  euPoint(x_int2, y_int2, name=obj1.name+"_intersect_"+obj2.name+"_1",show=show1)
+				int_2 =  euPoint(x_int2, y_int2, name=obj1.name+"_intersect_"+obj2.name+"_1",show=show2)
 			else:
 				name2=str(name2) #sanitize name2 so it is always a string
 				int_2 = euPoint(x_int2, y_int2, name=name2, show=show2)
 			
 			return int_1, int_2
-			"""
-			if show == True:
-				if show1 == True:
-					seac.pu()
-					seac.setpos(x_int1,y_int1)
-					seac.dot()
-					seac.home()
-				if show2 == True:
-					seac.pu()
-					seac.setpos(x_int2,y_int2)
-					seac.dot()
-					seac.home()
-			"""
+			
 	elif obj1.shape == 'circle' and obj2.shape == 'line':
 		r = obj1.radius
 		# adjust coordinates so circle is centered at origin for calculation:

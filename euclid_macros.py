@@ -47,7 +47,7 @@ def angle_bisector(A,B,C,show_process=False,produce_line=False ):
 
 
 
-def perpendicular(X,LINE, show_process=False, produce_line=False):
+def perpendicular(X,LINE, show_process=False, produce_line=False, show_line=True):
 	if X.xy == LINE.ptA:
 		tempcirc1 = euCircle(X, LINE.ptB,show=show_process)	
 	else:
@@ -56,24 +56,17 @@ def perpendicular(X,LINE, show_process=False, produce_line=False):
 	templineAB = euLine(A,B,show=show_process)
 	tempcircAB, tempcircBA = euCircle(A,B, show=show_process), euCircle(B,A, show=show_process)
 	tempX, tempY = intersect(tempcircAB, tempcircBA, show=show_process, show1=show_process, show2=show_process)
-	perpendicular = euLine(tempX, tempY, produce=produce_line)
+	perpendicular = euLine(tempX, tempY,show=show_line, produce=produce_line)
 	return perpendicular
 
-
+def parallel(X, LINE,  show_process=False, produce_line=True, show_line=True):
+	line1 = perpendicular(X,LINE, show_process=show_process, produce_line=show_process, show_line=show_process)
+	line2 = perpendicular(X,line1,show_process=show_process, produce_line=produce_line, show_line=show_line)
+	return line2
 
 if __name__ == "__main__":
-	A = euPoint(0,0)
-	B = euPoint(-300,-190)
-	C = euPoint(200,0)
-	#M = midpoint(A,B)
-	lineAC = euLine(A,C)
-
-	#O = midpoint(lineAC, show_process=True)
-	#seac.home()
-	#lineOM = euLine(O,M)
-	#lineMA = euLine(M,A)
-	#angle_bisector(A,B,C, show_process=True, produce_line=True)
-	angle_bisector(B,A,C, show_process=False, produce_line=True)
-	#angle_bisector(B,C,A, show_process=True, produce_line=True)
-	#p = perpendicular(B, lineAC, produce_line=True)
+	A, B, C = euPoint(0,-34), euPoint(79,90), euPoint(45,-40)
+	AB = euLine(A,B)
+	print("Not intended to be run as __main__, please import \"euclid_macros\" into another script")
+	parallel(C, AB)
 	turtle.exitonclick()
