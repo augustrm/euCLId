@@ -1,9 +1,9 @@
 from euCLId import *
 from numpy import linspace
-N = 50
+N = 100
 Ns = linspace(-295, -100.1, N)
-
-seac.color("#adadad")
+#screen.bgcolor("#4a4a4a")
+seac.color("black")
 
 
 A = euPoint(-500,0)
@@ -12,7 +12,7 @@ B = euPoint(-100,0)
 
 AB = euLine(A,B, produce=True)
 circle = euCircle(O,A)
-
+#seac.color("#b5b5b5")
 points_on_circle = []
 for i in Ns:
 	first, second = intersect(perpendicular(euPoint(i,0, show=False),AB, show_line=False),circle, show2=False)
@@ -31,7 +31,7 @@ for j in points_on_circle:
 	hyperbola_points.append(hyperbola_point)
 
 seac.color("red")
-seac.pensize(5)
+seac.pensize(4)
 for k in range(0, len(hyperbola_points)-1):
 	#print(k, len(hyperbola_points))
 	linkage = euLine(hyperbola_points[k], hyperbola_points[k+1])
