@@ -5,7 +5,8 @@ screen = turtle.Screen()
 screen.setup(width=700,height=700,startx=None,starty=None)
 screen.title("euCLId")
 screen.screensize(2000,2000)
-turtle.delay(0)
+screen.tracer(0)
+#turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
@@ -13,6 +14,10 @@ seac.speed(0)
 seac.home()
 seac.pu()
 seac.color("red")
+
+def show():
+	screen.update()
+	return None
 
 class euPoint:
 	instances = []
@@ -345,8 +350,9 @@ if __name__ == "__main__":
 	seac.write("M", font=("Arial",12,"normal"))
 	seac.setpos(N.xy)
 	seac.write("N", font=("Arial",12,"normal"))
+	
 	#C = euPoint(-200,-90)
 #bisect = angle_bisector(A,B,C,show_process=True)
-	
+	#show()
 	turtle.exitonclick()
 	#Working on instance collection to make TikZ generation easier
