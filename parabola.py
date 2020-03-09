@@ -1,7 +1,7 @@
 from euCLId import *
 
 seac.pensize(3)
-A = euPoint(-400, 0)
+A = euPoint(-250, 0)
 B = euPoint(800,0)
 D = euPoint(-200,0)
 

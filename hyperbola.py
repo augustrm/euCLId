@@ -1,6 +1,7 @@
 from euCLId import *
 from numpy import linspace
-N = 100
+
+N = 200
 Ns = linspace(-295, -100.1, N)
 #screen.bgcolor("#4a4a4a")
 seac.color("black")
@@ -24,9 +25,11 @@ for j in points_on_circle:
 	tan = perpendicular(j, radial_line, show_line=False)
 	AB_inter = intersect(tan, AB)
 	clean_tangent = euLine(j,AB_inter)
-	perp_to_AB = perpendicular(AB_inter, AB, show_line=False)
+	# This is the offending segment::
+	#perp_to_AB = perpendicular(AB_inter, AB, show_line=False)
+	arc_to_AB = euCircle(j, AB_inter, show=False)
 	paral = parallel(j, AB, show_line=False)
-	hyperbola_point = intersect(perp_to_AB, paral)
+	hyperbola_point, _ignore = intersect(arc_to_AB, paral, show2=False)
 	clea_paral = euLine(j, hyperbola_point)
 	hyperbola_points.append(hyperbola_point)
 
