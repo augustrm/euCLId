@@ -5,8 +5,8 @@ screen = turtle.Screen()
 screen.setup(width=700,height=700,startx=None,starty=None)
 screen.title("euCLId")
 screen.screensize(2000,2000)
-#screen.tracer(0)
-turtle.delay(0)
+screen.tracer(0)
+#turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
@@ -84,13 +84,14 @@ class euLine:
 
 class euCircle:
 	instances = []
-	def __init__(self, center_point, radial_point, name="default euCircle name", show=True):
+	def __init__(self, center_point, radial_point, name="default euCircle name", show=True, arc=360):
 		self.name = name
 		self.shape = 'circle'
 		self.c = (center_point[0],center_point[1]) 
 		self.r_p = (radial_point[0], radial_point[1])
 		self.radius = sqrt((self.r_p[0]-self.c[0])**2 + (self.r_p[1]-self.c[1])**2)
 		self.show = show
+		self.arc = arc
 		self.__class__.instances.append(self)
 		if self.show == True:
 			seac.pu()
@@ -98,7 +99,7 @@ class euCircle:
 			seac.setheading(seac.towards((self.c[0],self.c[1]))-90)
 			#radius = seac.distance((self.ptA[0],ptA[1]))
 			seac.pd()
-			seac.circle(self.radius)
+			seac.circle(self.radius, self.arc)
 			seac.pu()
 	def __str__(self):
 		return self.name
