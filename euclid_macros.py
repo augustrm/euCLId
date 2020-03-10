@@ -64,6 +64,13 @@ def parallel(X, LINE,  show_process=False, produce_line=True, show_line=True):
 	line2 = perpendicular(X,line1,show_process=show_process, produce_line=produce_line, show_line=show_line)
 	return line2
 
+
+def make_eps(filename):
+	filename = str(filename) +".eps"
+	screen.getcanvas().postscript(file=filename)
+	return None
+
+
 if __name__ == "__main__":
 	A, B, C = euPoint(0,-34), euPoint(79,90), euPoint(45,-40)
 	AB = euLine(A,B)

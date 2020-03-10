@@ -5,8 +5,8 @@ screen = turtle.Screen()
 screen.setup(width=700,height=700,startx=None,starty=None)
 screen.title("euCLId")
 screen.screensize(2000,2000)
-#screen.tracer(0)
-turtle.delay(0)
+screen.tracer(0)
+#turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
@@ -99,7 +99,7 @@ class euCircle:
 			seac.setheading(seac.towards((self.c[0],self.c[1]))-90)
 			#radius = seac.distance((self.ptA[0],ptA[1]))
 			seac.pd()
-			seac.circle(self.radius, self.arc )
+			seac.circle(self.radius, self.arc)
 			seac.pu()
 	def __str__(self):
 		return self.name
