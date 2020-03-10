@@ -13,7 +13,7 @@ B = euPoint(-100,0)
 
 AB = euLine(A,B, produce=True)
 circle = euCircle(O,A)
-#seac.color("#b5b5b5")
+
 points_on_circle = []
 for i in Ns:
 	first, second = intersect(perpendicular(euPoint(i,0, show=False),AB, show_line=False),circle, show2=False)
@@ -25,8 +25,6 @@ for j in points_on_circle:
 	tan = perpendicular(j, radial_line, show_line=False)
 	AB_inter = intersect(tan, AB)
 	clean_tangent = euLine(j,AB_inter)
-	# This is the offending segment::
-	#perp_to_AB = perpendicular(AB_inter, AB, show_line=False)
 	arc_to_AB = euCircle(j, AB_inter, show=False)
 	paral = parallel(j, AB, show_line=False)
 	hyperbola_point, _ignore = intersect(arc_to_AB, paral, show2=False)
@@ -36,7 +34,6 @@ for j in points_on_circle:
 seac.color("red")
 seac.pensize(4)
 for k in range(0, len(hyperbola_points)-1):
-	#print(k, len(hyperbola_points))
 	linkage = euLine(hyperbola_points[k], hyperbola_points[k+1])
 
 

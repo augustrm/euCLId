@@ -84,13 +84,14 @@ class euLine:
 
 class euCircle:
 	instances = []
-	def __init__(self, center_point, radial_point, name="default euCircle name", show=True):
+	def __init__(self, center_point, radial_point, name="default euCircle name", show=True, arc=360):
 		self.name = name
 		self.shape = 'circle'
 		self.c = (center_point[0],center_point[1]) 
 		self.r_p = (radial_point[0], radial_point[1])
 		self.radius = sqrt((self.r_p[0]-self.c[0])**2 + (self.r_p[1]-self.c[1])**2)
 		self.show = show
+		self.arc = arc
 		self.__class__.instances.append(self)
 		if self.show == True:
 			seac.pu()
@@ -98,7 +99,7 @@ class euCircle:
 			seac.setheading(seac.towards((self.c[0],self.c[1]))-90)
 			#radius = seac.distance((self.ptA[0],ptA[1]))
 			seac.pd()
-			seac.circle(self.radius)
+			seac.circle(self.radius, self.arc )
 			seac.pu()
 	def __str__(self):
 		return self.name
@@ -323,7 +324,7 @@ if __name__ == "__main__":
 	AB = euLine(A,B)
 	BC = euLine(B,C)
 	AC = euLine(A,C)
-	circ = euCircle(A,B)
+	circ = euCircle(A,B, arc=60)
 	P,Q = intersect(circ, AB)
 	M,N = intersect(circ, AC)
 	seac.setpos(P.xy)
