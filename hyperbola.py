@@ -1,7 +1,7 @@
 from euCLId import *
 from numpy import linspace
 
-N = 100
+N = 10
 Ns = linspace(-295, -100.1, N)
 #screen.bgcolor("#4a4a4a")
 seac.color("black")
@@ -43,6 +43,6 @@ seac.pensize(4)
 for k in range(0, len(hyperbola_points)-1):
 	linkage = euLine(hyperbola_points[k], hyperbola_points[k+1])
 
-make_eps("FINAL")
+make_eps("final_hyperbola")
 
 turtle.exitonclick()
