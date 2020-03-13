@@ -2,15 +2,15 @@ import turtle
 from math import cos, sin, sqrt, pi
 
 screen = turtle.Screen()
-screen.setup(width=700,height=700,startx=None,starty=None)
+screen.setup(width=0.80,height=0.80,startx=None,starty=None)
 screen.title("euCLId")
 screen.screensize(2000,2000)
-screen.tracer(0)
-#turtle.delay(0)
+#screen.tracer(0)
+turtle.delay(0)
 #stylistic note: seac stands for Straight Edge And Compass
 seac = turtle.Turtle()
 #seac.ht()
-seac.speed(0)
+seac.speed(8)
 seac.home()
 seac.pu()
 seac.color("red")
