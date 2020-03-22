@@ -1,5 +1,7 @@
 from euclid_core import *
-
+from platform import system
+import os
+import string
 def midpoint(A,B=None, show_process=False, show_point=True):
 	if A.shape == 'line':
 		P,Q = A.ptA, A.ptB
@@ -19,13 +21,6 @@ def midpoint(A,B=None, show_process=False, show_point=True):
 		return M
 
 def angle_bisector(A,B,C,show_process=False,produce_line=False ):
-	###########################################################################
-	#                    --------------------------------                     #
-	#                   | CAUTION!!   UNDER CONSTUCTION! |                    #
-	#                    --------------------------------                     #
-	#                           |       |          |                          #
-	#                           V       V          V                          #
-	###########################################################################
 	templineAB = euLine(A,B, show=show_process)
 	templineBC = euLine(B,C, show=show_process)
 	seac.setpos(B[0],B[1])
@@ -64,16 +59,41 @@ def parallel(X, LINE,  show_process=False, produce_line=True, show_line=True):
 	line2 = perpendicular(X,line1,show_process=show_process, produce_line=produce_line, show_line=show_line)
 	return line2
 
+def make_background(color):
+	bgmaker = turtle.Turtle()
+	bgmaker.pu()
+	X,Y = 0.5*screen.screensize()[0] , 0.5*screen.screensize()[1]
+	bgmaker.setpos(-X, Y)
+	bgmaker.fillcolor(color)
+	bgmaker.begin_fill()
+	bgmaker.setpos(-X, -Y)
+	bgmaker.setpos(X, -Y)
+	bgmaker.setpos(X, Y)
+	bgmaker.end_fill()
 
-def make_eps(filename):
-	filename = str(filename) +".eps"
-	screen.getcanvas().postscript(file=filename)
+def make_eps(filename, directory="EPS", convert=False):
+	try:
+		if not os.path.exists(directory):
+			os.makedirs(directory)
+	except OSError:
+		print ('Error: Creating directory. ' +  directory)
+	if system() == 'Linux':
+		epsfilename = directory+"/"+str(filename) +".eps"
+		screen.getcanvas().postscript(file=epsfilename)
+		if convert == True:
+			convertfilename = directory+"/"+str(filename) +".png"
+			os.system("convert "+epsfilename+" -colorspace srgb -type TrueColorAlpha "+convertfilename)
+	if system() == 'Windows':
+		epsfilename = directory+"\\"+str(filename) +".eps"	
+		screen.getcanvas().postscript(file=epsfilename)
 	return None
 
 
 if __name__ == "__main__":
+	make_background("gray")
+	print((-0.5*screen.screensize()[0], 0.5*screen.screensize()[1]))
 	A, B, C = euPoint(0,-34), euPoint(79,90), euPoint(45,-40)
 	AB = euLine(A,B)
 	print("Not intended to be run as __main__, please import \"euclid_macros\" into another script")
 	parallel(C, AB)
-	turtle.exitonclick()
+	screen.exitonclick()

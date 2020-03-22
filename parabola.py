@@ -117,4 +117,4 @@ paraJ1, paraJ2 = intersect(perpR1, perpAB_J), intersect(perpR2, perpAB_J)
 paraK1, paraK2 = intersect(perpS1, perpAB_K), intersect(perpS2, perpAB_K)
 paraL1, paraL2 = intersect(perpT1, perpAB_L), intersect(perpT2, perpAB_L)
 """
-turtle.exitonclick()
+screen.exitonclick()
