@@ -16,5 +16,5 @@ H, _ignore = intersect(circBF, BC)
 seac.color("red")
 seac.pensize(2)
 DF, FH, DH = euLine(D,F), euLine(F,H), euLine(D,H)
-make_eps("final_square_triangle", directory="square_triangle")
+
 screen.exitonclick()
