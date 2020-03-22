@@ -82,7 +82,7 @@ def make_eps(filename, directory="EPS", convert=False):
 		screen.getcanvas().postscript(file=epsfilename)
 		if convert == True:
 			convertfilename = directory+"/"+str(filename) +".png"
-			os.system("convert "+epsfilename+" -colorspace srgb -type TrueColorAlpha "+convertfilename)
+			os.system("convert "+epsfilename+" "+convertfilename)
 	if system() == 'Windows':
 		epsfilename = directory+"\\"+str(filename) +".eps"	
 		screen.getcanvas().postscript(file=epsfilename)
