@@ -3,11 +3,6 @@ make_background("white")
 seac.color("blue")
 colormarker = euPoint(-300,300)
 seac.color("black")
-counter=1
-def mkframe():
-	global counter
-	make_eps(str(counter).zfill(4), directory="IV11", convert=True)
-	counter+=1
 
 #We follow Euclid's construction of a regular pentagon within a given circle from his "Elements"
 A = euPoint(0,0)
