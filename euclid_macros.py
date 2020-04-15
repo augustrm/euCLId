@@ -88,6 +88,16 @@ def make_eps(filename, directory="EPS", convert=False):
 		screen.getcanvas().postscript(file=epsfilename)
 	return None
 
+########################################################################################################
+# quick and dirty "camera" for taking eps images, converting them to png, assigning them a frame       #
+# number, and filing them into a collection directory:                                                 #
+########################################################################################################
+_counter=1                                                                                              #
+def mkframe(_convert=False):                                                                           #
+	global _counter                                                                                 #
+	make_eps(str(_counter).zfill(5), directory="euCLId_frames_out", convert=_convert)               #
+	_counter+=1                                                                                     #
+########################################################################################################
 
 if __name__ == "__main__":
 	make_background("gray")
