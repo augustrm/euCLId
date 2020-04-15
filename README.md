@@ -1,5 +1,5 @@
 # euCLId
-A Command Line Interface for Achieving Similar Functionality to Geometer's Sketch Pad or Kig utilizing ONLY python 3 and its default packages (Python 3 with batteries included is available at [https://www.python.org/downloads/]). Design philosophy is centered around "purely geometric" construction (as is done in Euclid's *Elements*), eschewing algebraic and numerical methods wherever possible (though we cannot utterly avoid them in an electronic medium).
+A Command Line Interface for Achieving Similar Functionality to Geometer's Sketch Pad or Kig utilizing ONLY python 3 and its default packages (Python 3 with batteries included is available at https://www.python.org/downloads/). Design philosophy is centered around "purely geometric" construction (as is done in Euclid's *Elements*), eschewing algebraic and numerical methods wherever possible (though we cannot utterly avoid them in an electronic medium).
 
 ## THIS IS VERY MUCH SO A WORK IN PROGRESS, AND IS SUBJECT TO MASSIVE, OCCASIONALLY BREAKING, CHANGES
 
