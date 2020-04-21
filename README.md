@@ -15,16 +15,16 @@ EPS vector image generation is more or less functional.
 
 #### Inscribing a Regular Pentagon in a Given Circle (IV.11) from *Elements*:
 ---
-<a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/IV11.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/IV11.gif"></a>
+<a href="https://github.com/augustrm/euCLId/blob/master/demos/IV11.py"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/IV11.gif"></a>
 
 #### Quadrature of a Parabola, Ibn Sinan's *On Drawing the Three Conic Sections*:
 ---
-<a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/parabola.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/parabola.gif"></a>
+<a href="https://github.com/augustrm/euCLId/blob/master/demos/parabola.py"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/parabola.gif"></a>
 
 #### Quadrature of a Hyperbola, Ibn Sinan's *On Drawing the Three Conic Sections*:
 ---
-<a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/hyperbola.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/hyperbola.gif"></a>
+<a href="https://github.com/augustrm/euCLId/blob/master/demos/hyperbola.py"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/hyperbola.gif"></a>
 
 #### Inscribing an Equalateral Triangle in a Given Square, Ibn Sinan's *On Drawing the Three Conic Sections*:
 ---
-<a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/triangle.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/triangle.gif"></a>
+<a href="https://github.com/augustrm/euCLId/blob/master/demos/triangle.py"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/triangle.gif"></a>
