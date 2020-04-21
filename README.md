@@ -17,11 +17,11 @@ EPS vector image generation is more or less functional.
 ---
 <a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/IV11.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/IV11.gif"></a>
 
-#### Quadrature of Parabola, Ibn Sinan's *On Drawing the Three Conic Sections*:
+#### Quadrature of a Parabola, Ibn Sinan's *On Drawing the Three Conic Sections*:
 ---
 <a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/parabola.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/parabola.gif"></a>
 
-#### Quadrature of Hyperbola, Ibn Sinan's *On Drawing the Three Conic Sections*:
+#### Quadrature of a Hyperbola, Ibn Sinan's *On Drawing the Three Conic Sections*:
 ---
 <a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/hyperbola.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/hyperbola.gif"></a>
 
