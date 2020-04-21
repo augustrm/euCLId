@@ -13,7 +13,7 @@ EPS vector image generation is more or less functional.
 
 ## Here's a couple animations made with euCLId:
 
-#### Book IV, Proposition 11 from *Elements*:
+#### Inscribing a Regular Pentagon in a Given Circle (IV.11) from *Elements*:
 ---
 <a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/IV11.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/IV11.gif"></a>
 
