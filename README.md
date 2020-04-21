@@ -11,4 +11,7 @@ EPS vector image generation is more or less functional.
 
 *Really big stretch goal is to re-write in Haskell and OpenGL for better performance (and as a fun exercise in functional programming!).*
 
+Here's a couple animations made with euCLId:
+
+
 
