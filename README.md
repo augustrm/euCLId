@@ -11,7 +11,20 @@ EPS vector image generation is more or less functional.
 
 *Really big stretch goal is to re-write in Haskell and OpenGL for better performance (and as a fun exercise in functional programming!).*
 
-Here's a couple animations made with euCLId:
+## Here's a couple animations made with euCLId:
 
+#### Book IV, Proposition 11 from *Elements*:
+---
+<a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/IV11.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/IV11.gif"></a>
 
+#### Quadrature of Parabola, Ibn Sinan's *On Drawing the Three Conic Sections*:
+---
+<a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/parabola.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/parabola.gif"></a>
 
+#### Quadrature of Hyperbola, Ibn Sinan's *On Drawing the Three Conic Sections*:
+---
+<a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/hyperbola.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/hyperbola.gif"></a>
+
+#### Inscribing an Equalateral Triangle in a Given Square, Ibn Sinan's *On Drawing the Three Conic Sections*:
+---
+<a href="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/triangle.gif"><img src="https://raw.githubusercontent.com/augustrm/euCLId/master/demos/triangle.gif"></a>
